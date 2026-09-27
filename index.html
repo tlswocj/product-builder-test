@@ -6,6 +6,14 @@
 <meta content="web_dashboard" name="shell-type"/>
 <title>MockStox - 가상 주식 거래 연습</title>
 <meta name="description" content="실제 거래소 시세와 연결되지 않은 가상 주식 시뮬레이터입니다. 지정가와 시장가 주문, 수수료, 포트폴리오 손익을 연습해보세요."/>
+<link rel="canonical" href="./"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="ko_KR"/>
+<meta property="og:title" content="MockStox - 가상 주식 거래 연습"/>
+<meta property="og:description" content="실제 거래소 시세와 연결되지 않은 가상 주식 시뮬레이터입니다. 지정가와 시장가 주문, 수수료, 포트폴리오 손익을 연습해보세요."/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MockStox - 가상 주식 거래 연습"/>
+<meta name="twitter:description" content="실제 거래소 시세와 연결되지 않은 가상 주식 시뮬레이터입니다. 지정가와 시장가 주문, 수수료, 포트폴리오 손익을 연습해보세요."/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
@@ -43,6 +51,17 @@
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #464554;
+    }
+    @media (max-width: 1023px) {
+      #desktop-sidebar {
+        display: none !important;
+      }
+      #app-viewport {
+        padding-left: 0 !important;
+      }
+      #site-footer {
+        padding-left: 1.25rem !important;
+      }
     }
   </style>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -168,7 +187,7 @@
 </div>
 </header>
 <!-- LEFT SIDEBAR: Nav + Integrated Stock Explorer & Watchlist -->
-<aside class="fixed left-0 top-16 bottom-0 w-64 lg:w-72 bg-[#11131c] border-r border-indigo-500/15 z-40 flex flex-col justify-between p-3 overflow-hidden shadow-2xl">
+<aside class="fixed left-0 top-16 bottom-0 w-64 lg:w-72 bg-[#11131c] border-r border-indigo-500/15 z-40 flex flex-col justify-between p-3 overflow-hidden shadow-2xl" id="desktop-sidebar">
 <!-- Top: Terminal Tag & Main Navigation Items -->
 <div class="flex flex-col gap-2 shrink-0">
 <div class="px-2.5 py-1.5 flex items-center justify-between rounded-lg bg-indigo-950/30 border border-indigo-500/20">
@@ -237,6 +256,19 @@
       </span>
 </div>
 </div>
+<div class="shrink-0 px-2 pb-2 flex flex-col gap-2" aria-label="시뮬레이션 설정">
+<span class="text-[11px] font-bold text-indigo-300">시뮬레이션 설정</span>
+<label class="flex flex-col gap-1 text-[11px] font-medium text-slate-300" for="simulation-scenario">가격 시나리오
+<select class="w-full rounded-lg border border-slate-700 bg-[#0c0e17] px-2 py-1.5 text-[11px] text-white" id="simulation-scenario">
+<option value="balanced">균형 변동</option><option value="bullish">상승 편향</option><option value="bearish">하락 편향</option><option value="volatile">고변동</option>
+</select><span class="font-normal text-slate-500" id="scenario-description">상승과 하락이 비슷한 확률로 발생하는 가상 시나리오입니다.</span>
+</label>
+<label class="flex flex-col gap-1 text-[11px] font-medium text-slate-300" for="starting-capital-select">초기 모의 자금
+<select class="w-full rounded-lg border border-slate-700 bg-[#0c0e17] px-2 py-1.5 text-[11px] text-white" id="starting-capital-select">
+<option value="10000000">1,000만 원</option><option value="50000000">5,000만 원</option><option value="100000000">1억 원</option>
+</select>
+</label>
+</div>
 <!-- Bottom: Feed Status footer -->
 <div class="flex flex-col gap-1.5 p-2 bg-[#161824] rounded-xl border border-slate-700/60 shrink-0">
 <div class="flex items-center justify-between text-[11px] whitespace-nowrap">
@@ -250,19 +282,25 @@
 </div>
 </aside>
 <!-- MAIN VIEWPORT CONTENT (Offset for Fixed Header & Sidebar) -->
-<div class="pl-64 lg:pl-72 pt-16 min-h-screen">
+<div class="pl-64 lg:pl-72 pt-16 min-h-screen" id="app-viewport">
 <main class="p-3.5 lg:p-5 flex flex-col gap-4 max-w-[1920px] mx-auto" id="dashboard">
+<h1 class="sr-only">MockStox 가상 주식 거래 연습</h1>
 <section class="rounded-xl border border-amber-500/30 bg-amber-950/20 px-4 py-3 text-xs leading-relaxed text-amber-100" aria-label="시뮬레이션 안내">
 <strong>가상 시뮬레이션 안내:</strong> 종목 가격·지수·호가·체결량은 교육용 임의 데이터이며 KRX 또는 실제 시장과 연결되지 않습니다. 실제 주문이나 투자 조언을 제공하지 않습니다. <a class="underline" href="about.html">데이터 생성 방식과 한계</a> · <a class="underline" href="guide.html">주문 가이드</a>
 </section>
-<section class="grid grid-cols-1 gap-3 border-b border-slate-800 pb-4 sm:grid-cols-2" aria-label="가상 시뮬레이션 설정">
-<label class="flex flex-col gap-1.5 text-xs font-semibold text-slate-300" for="simulation-scenario">가격 시나리오
-<select class="rounded-lg border border-slate-700 bg-[#191b25] px-3 py-2 text-xs text-white" id="simulation-scenario">
-<option value="balanced">균형 변동</option><option value="bullish">상승 편향</option><option value="bearish">하락 편향</option><option value="volatile">고변동</option>
-</select><span class="font-normal text-slate-500" id="scenario-description">상승과 하락이 비슷한 확률로 발생하는 가상 시나리오입니다.</span>
+<label class="lg:hidden flex flex-col gap-1.5 text-xs font-semibold text-slate-300" for="mobile-stock-select">연습할 종목
+<select class="rounded-lg border border-slate-700 bg-[#191b25] px-3 py-2 text-xs text-white" id="mobile-stock-select">
+<option value="005930">삼성전자 · 005930</option><option value="000660">SK하이닉스 · 000660</option><option value="005380">현대차 · 005380</option><option value="035420">NAVER · 035420</option><option value="247540">에코프로비엠 · 247540</option><option value="068270">셀트리온 · 068270</option>
+</select>
 </label>
-<label class="flex flex-col gap-1.5 text-xs font-semibold text-slate-300" for="starting-capital-select">초기 모의 자금
-<select class="rounded-lg border border-slate-700 bg-[#191b25] px-3 py-2 text-xs text-white" id="starting-capital-select">
+<section class="lg:hidden grid grid-cols-1 gap-3 border-b border-slate-800 pb-4" aria-label="가상 시뮬레이션 설정">
+<label class="flex flex-col gap-1.5 text-xs font-semibold text-slate-300" for="mobile-simulation-scenario">가격 시나리오
+<select class="rounded-lg border border-slate-700 bg-[#191b25] px-3 py-2 text-xs text-white" id="mobile-simulation-scenario">
+<option value="balanced">균형 변동</option><option value="bullish">상승 편향</option><option value="bearish">하락 편향</option><option value="volatile">고변동</option>
+</select><span class="font-normal text-slate-500" id="mobile-scenario-description">상승과 하락이 비슷한 확률로 발생하는 가상 시나리오입니다.</span>
+</label>
+<label class="flex flex-col gap-1.5 text-xs font-semibold text-slate-300" for="mobile-starting-capital-select">초기 모의 자금
+<select class="rounded-lg border border-slate-700 bg-[#191b25] px-3 py-2 text-xs text-white" id="mobile-starting-capital-select">
 <option value="10000000">1,000만 원</option><option value="50000000">5,000만 원</option><option value="100000000">1억 원</option>
 </select><span class="font-normal text-slate-500">변경 시 기존 모의 계좌를 초기화합니다.</span>
 </label>
@@ -346,20 +384,20 @@
 <!-- PRO TRADING DESK: EXPANDED 2-COLUMN LAYOUT (Chart 8 cols, Orderbook 4 cols) -->
 <section class="grid grid-cols-1 xl:grid-cols-12 gap-4 items-stretch">
 <!-- EXPANDED MAIN CHART TERMINAL (Takes 8 of 12 cols, wide aspect) -->
-<div class="xl:col-span-8 bg-[#161824] rounded-2xl border border-slate-700/60 shadow-xl flex flex-col h-[740px] overflow-hidden">
+<div class="xl:col-span-8 bg-[#161824] rounded-2xl border border-slate-700/60 shadow-xl flex flex-col min-h-[740px] overflow-hidden">
 <!-- Top Stock Info Strip -->
 <div class="p-4 bg-gradient-to-r from-[#1c1f2e] to-[#161824] border-b border-slate-700/60 flex items-center justify-between flex-wrap gap-3">
-<div class="flex items-center gap-3">
+<div class="flex items-center gap-3 flex-wrap">
 <button class="w-9 h-9 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-amber-400/50 flex items-center justify-center transition-colors shrink-0" id="btn-toggle-favorite-current">
 <span class="material-symbols-outlined text-slate-400 text-[20px]" id="current-fav-icon">star_border</span>
 </button>
 <div class="flex flex-col">
-<div class="flex items-center gap-2 whitespace-nowrap">
+<div class="flex items-center gap-2 flex-wrap">
 <h2 class="text-xl lg:text-2xl font-extrabold text-white tracking-tight whitespace-nowrap" id="chart-stock-name">삼성전자</h2>
 <span class="text-xs px-2 py-0.5 rounded-md bg-slate-800 text-slate-400 font-mono-num font-semibold whitespace-nowrap" id="chart-stock-code">005930</span>
 <span class="text-xs px-2 py-0.5 rounded-md bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 font-medium whitespace-nowrap">KOSPI 대형주</span>
 </div>
-<div class="flex items-baseline gap-2 mt-1 whitespace-nowrap">
+<div class="flex items-baseline gap-2 mt-1 flex-wrap">
 <span class="text-2xl lg:text-3xl font-black text-bull-light font-mono-num tracking-tight whitespace-nowrap" id="chart-current-price">78,400</span>
 <span class="text-xs font-bold text-slate-400 whitespace-nowrap">KRW</span>
 <span class="text-xs font-bold text-bull-light font-mono-num whitespace-nowrap bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20" id="chart-price-delta">▲ 1,400 (+1.82%)</span>
@@ -384,7 +422,7 @@
 </div>
 </div>
 <!-- Chart Controls Bar -->
-<div class="px-4 py-2 bg-[#11131c] border-b border-slate-800 flex items-center justify-between whitespace-nowrap">
+<div class="px-4 py-2 bg-[#11131c] border-b border-slate-800 flex items-center justify-between whitespace-nowrap overflow-x-auto">
 <div class="flex items-center gap-1.5">
 <button class="chart-period-btn px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow transition-all whitespace-nowrap" data-period="1m">1분</button>
 <button class="chart-period-btn px-3 py-1 rounded-lg text-xs font-semibold bg-[#1d1f29] text-slate-300 hover:text-white hover:bg-slate-700 transition-all whitespace-nowrap" data-period="5m">5분</button>
@@ -423,10 +461,10 @@
 </div>
 </div>
 <!-- RIGHT: COMPACT ORDERBOOK & PRO ORDER ENTRY (4 cols) -->
-<div class="xl:col-span-4 flex flex-col gap-3.5 h-[740px]">
+<div class="xl:col-span-4 flex flex-col gap-3.5 min-h-[740px]">
 <!-- REALTIME 10-LEVEL ORDER BOOK (Top Half) -->
-<div class="bg-[#161824] rounded-2xl border border-slate-700/60 shadow-xl p-3 flex flex-col justify-between flex-1 overflow-hidden">
-<div class="flex items-center justify-between pb-1.5 border-b border-slate-800 whitespace-nowrap">
+<div class="bg-[#161824] rounded-2xl border border-slate-700/60 shadow-xl p-3 flex flex-col justify-between flex-1 min-h-[320px]">
+<div class="flex items-center justify-between flex-wrap gap-2 pb-1.5 border-b border-slate-800">
 <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap">
 <span class="material-symbols-outlined text-indigo-400 text-[16px]">stacked_bar_chart</span>
               가상 10단계 호가창
@@ -434,7 +472,7 @@
 <span class="text-[11px] text-cyan-300 font-medium whitespace-nowrap bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40">가격 선택 시 지정가 입력</span>
 </div>
 <!-- Asks (매도호가) -->
-<div class="flex flex-col gap-0.5 my-1 overflow-hidden" id="orderbook-asks"></div>
+<div class="flex flex-col gap-0.5 my-1" id="orderbook-asks"></div>
 <!-- Mid-Market Spread Info Pill -->
 <div class="py-1 px-3 my-0.5 rounded-lg bg-[#1c1f2e] border border-slate-700/60 flex items-center justify-between whitespace-nowrap">
 <span class="text-[11px] font-bold text-slate-400 whitespace-nowrap">현재 기준가</span>
@@ -442,7 +480,7 @@
 <span class="text-[11px] font-bold text-bull-light font-mono-num whitespace-nowrap" id="orderbook-delta">+1.82%</span>
 </div>
 <!-- Bids (매수호가) -->
-<div class="flex flex-col gap-0.5 my-1 overflow-hidden" id="orderbook-bids"></div>
+<div class="flex flex-col gap-0.5 my-1" id="orderbook-bids"></div>
 </div>
 <!-- PRO ORDER ENTRY FORM (Bottom Half) -->
 <div class="bg-[#161824] rounded-2xl border border-slate-700/60 shadow-xl p-3.5 flex flex-col justify-between flex-1">
@@ -632,7 +670,7 @@
 <span class="text-[11px] text-slate-300 whitespace-nowrap" id="toast-message">정상적으로 주문이 체결되었습니다.</span>
 </div>
 </div>
-<footer class="border-t border-slate-800 bg-[#11131c] px-5 py-5 pl-64 text-xs text-slate-400 lg:pl-72">
+<footer class="border-t border-slate-800 bg-[#11131c] px-5 py-5 pl-64 text-xs text-slate-400 lg:pl-72" id="site-footer">
 <div class="mx-auto flex max-w-[1920px] flex-wrap items-center justify-between gap-3">
 <span>MockStox는 교육 목적의 가상 시뮬레이터이며 실제 시장 데이터·투자 서비스를 제공하지 않습니다.</span>
 <nav class="flex flex-wrap gap-4" aria-label="서비스 정보"><a class="hover:text-white" href="about.html">서비스·데이터 안내</a><a class="hover:text-white" href="guide.html">이용 가이드</a><a class="hover:text-white" href="privacy.html">개인정보처리방침</a><a class="hover:text-white" href="terms.html">이용 조건</a></nav>
@@ -767,7 +805,10 @@
     }
 
     function renderScenarioDescription() {
-      document.getElementById('scenario-description').textContent = SIMULATION_SCENARIOS[appState.scenario].description;
+      ['scenario-description', 'mobile-scenario-description'].forEach(id => {
+        const description = document.getElementById(id);
+        if (description) description.textContent = SIMULATION_SCENARIOS[appState.scenario].description;
+      });
     }
 
     const fmtWon = (num) => Math.round(num).toLocaleString('ko-KR');
@@ -901,7 +942,7 @@
               </span>
             </button>
             <div class="flex flex-col min-w-0">
-              <span class="text-xs font-bold text-white whitespace-nowrap truncate">${stk.name}</span>
+              <span class="text-xs font-bold text-white break-words">${stk.name}</span>
               <span class="text-[10px] text-slate-400 font-mono-num whitespace-nowrap">${stk.id}</span>
             </div>
           </div>
@@ -951,6 +992,8 @@
     function setActiveStock(id) {
       appState.activeStockId = id;
       const stk = getActiveStock();
+      const mobileStockSelect = document.getElementById('mobile-stock-select');
+      if (mobileStockSelect) mobileStockSelect.value = stk.id;
 
       document.getElementById('chart-stock-name').textContent = stk.name;
       document.getElementById('chart-stock-code').textContent = stk.id;
@@ -1015,7 +1058,7 @@
       askLevels.forEach(item => {
         const pct = Math.min(100, Math.round((item.qty / maxQty) * 100));
         const row = document.createElement('div');
-        row.className = 'relative flex items-center justify-between py-1 px-2.5 rounded cursor-pointer hover:bg-slate-700/40 transition-colors overflow-hidden whitespace-nowrap';
+        row.className = 'relative flex items-center justify-between gap-2 py-1 px-2.5 rounded cursor-pointer hover:bg-slate-700/40 transition-colors whitespace-nowrap';
         row.innerHTML = `
           <div class="absolute right-0 top-0 bottom-0 bg-bear/15 rounded-r" style="width: ${pct}%"></div>
           <span class="text-xs text-bear-light font-mono-num font-bold relative z-10 whitespace-nowrap">${fmtWon(item.price)}</span>
@@ -1031,7 +1074,7 @@
       bidLevels.forEach(item => {
         const pct = Math.min(100, Math.round((item.qty / maxQty) * 100));
         const row = document.createElement('div');
-        row.className = 'relative flex items-center justify-between py-1 px-2.5 rounded cursor-pointer hover:bg-slate-700/40 transition-colors overflow-hidden whitespace-nowrap';
+        row.className = 'relative flex items-center justify-between gap-2 py-1 px-2.5 rounded cursor-pointer hover:bg-slate-700/40 transition-colors whitespace-nowrap';
         row.innerHTML = `
           <div class="absolute right-0 top-0 bottom-0 bg-bull/15 rounded-r" style="width: ${pct}%"></div>
           <span class="text-xs text-bull-light font-mono-num font-bold relative z-10 whitespace-nowrap">${fmtWon(item.price)}</span>
@@ -1595,26 +1638,35 @@
     }
 
     function setupEvents() {
-      const scenarioSelect = document.getElementById('simulation-scenario');
-      scenarioSelect.value = appState.scenario;
+      const mobileStockSelect = document.getElementById('mobile-stock-select');
+      mobileStockSelect.addEventListener('change', () => setActiveStock(mobileStockSelect.value));
+
+      const scenarioSelects = ['simulation-scenario', 'mobile-simulation-scenario']
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+      scenarioSelects.forEach(select => { select.value = appState.scenario; });
       renderScenarioDescription();
-      scenarioSelect.addEventListener('change', () => {
-        appState.scenario = scenarioSelect.value;
+      scenarioSelects.forEach(select => select.addEventListener('change', () => {
+        appState.scenario = select.value;
+        scenarioSelects.forEach(item => { item.value = appState.scenario; });
         saveState();
         renderScenarioDescription();
-        showToast('시나리오 변경', `${scenarioSelect.options[scenarioSelect.selectedIndex].text} 시나리오가 적용되었습니다.`);
-      });
+        showToast('시나리오 변경', `${select.options[select.selectedIndex].text} 시나리오가 적용되었습니다.`);
+      }));
 
-      const seedSelect = document.getElementById('starting-capital-select');
-      seedSelect.value = String(appState.seedCash);
-      seedSelect.addEventListener('change', () => {
-        const nextSeedCash = Number(seedSelect.value);
+      const seedSelects = ['starting-capital-select', 'mobile-starting-capital-select']
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+      seedSelects.forEach(select => { select.value = String(appState.seedCash); });
+      seedSelects.forEach(select => select.addEventListener('change', () => {
+        const nextSeedCash = Number(select.value);
         const hasAccountActivity = appState.cash !== appState.seedCash || Object.keys(appState.holdings).length > 0 || appState.history.length > 0 || appState.pendingOrders.length > 0;
         if (hasAccountActivity && !confirm('초기 모의 자금을 바꾸면 현 계좌와 기록이 초기화됩니다. 계속할까요?')) {
-          seedSelect.value = String(appState.seedCash);
+          seedSelects.forEach(item => { item.value = String(appState.seedCash); });
           return;
         }
 
+        seedSelects.forEach(item => { item.value = String(nextSeedCash); });
         appState.seedCash = nextSeedCash;
         appState.cash = nextSeedCash;
         appState.holdings = {};
@@ -1627,7 +1679,7 @@
         renderPendingOrders();
         updateOrderPreview();
         showToast('초기 자금 변경', `${fmtWon(nextSeedCash)}원으로 모의 계좌를 초기화했습니다.`);
-      });
+      }));
 
       document.getElementById('order-type-buy-btn').addEventListener('click', () => {
         appState.orderSide = 'buy';
