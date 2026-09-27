@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MockStox의 목적, 가상 주가 생성 방식과 시뮬레이션의 한계를 안내합니다.">
+  <title>서비스와 데이터 안내 | MockStox</title>
+  <style>
+    :root { color-scheme: dark; --bg: #0c0e17; --surface: #161824; --line: #32343e; --text: #e1e1ef; --muted: #a7a9ba; --accent: #67e8f9; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: radial-gradient(ellipse at 15% 0%, #202442 0, var(--bg) 42rem); color: var(--text); font: 16px/1.75 Pretendard, system-ui, sans-serif; }
+    main { width: min(860px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 72px; }
+    nav, footer { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; color: var(--muted); font-size: 13px; }
+    a { color: var(--accent); }
+    h1 { margin: 56px 0 12px; font-size: clamp(30px, 6vw, 48px); line-height: 1.12; }
+    h2 { margin-top: 36px; font-size: 21px; }
+    .lead { color: #c7c4d7; font-size: 18px; }
+    .notice { margin: 24px 0; border-left: 3px solid #fbbf24; padding: 14px 18px; background: #29200f; }
+    section { border-top: 1px solid var(--line); padding-top: 4px; }
+    footer { border-top: 1px solid var(--line); padding-top: 20px; }
+  </style>
+</head>
+<body>
+<main>
+  <nav aria-label="주요 메뉴"><a href="index.html">MockStox 대시보드</a><span><a href="guide.html">이용 가이드</a> · <a href="privacy.html">개인정보처리방침</a> · <a href="terms.html">이용 조건</a></span></nav>
+  <h1>실전이 아닌, 연습을 위한 가상 거래 도구</h1>
+  <p class="lead">MockStox는 주문 입력, 지정가 대기, 수수료 계산과 포트폴리오 손익을 연습할 수 있는 브라우저 기반 주식 시뮬레이터입니다. 실제 증권사 계좌나 거래소에 연결되지 않습니다.</p>
+  <p class="notice"><strong>중요:</strong> 화면의 모든 가격·지수·호가·거래량·체결은 교육용 가상 데이터입니다. 실시간 시세, 과거 실측 데이터 또는 실제 투자 조언이 아닙니다.</p>
+  <section>
+    <h2>가격과 차트는 어떻게 만들어지나요?</h2>
+    <p>6개 종목의 시작 가격, 전일 종가, 호가 단위와 초기 고가·저가는 페이지 코드에 기록된 예시 값입니다. 페이지가 열리면 초기 캔들 봉도 임의의 값으로 생성됩니다. 이후 약 3초마다 선택한 시나리오에 따라 가격 변동 여부와 방향을 무작위로 정합니다. 균형·상승 편향·하락 편향 시나리오는 한 번에 한 호가 단위씩 움직이고, 고변동 시나리오는 최대 세 호가 단위까지 움직입니다. 거래량도 임의로 더해집니다.</p>
+    <p>시뮬레이터는 1,000만 원, 5,000만 원, 1억 원의 시작 자금을 제공합니다. 시작 자금을 바꾸면 모의 계좌·보유 종목·체결 내역·대기 주문이 초기화됩니다.</p>
+    <p>호가창의 잔량은 화면을 갱신할 때 임의로 새로 만들어지며 실제 주문장이나 체결 대기 물량을 나타내지 않습니다. 종목 목록에 표시된 지수 값도 예시 표시입니다.</p>
+  </section>
+  <section>
+    <h2>체결 시뮬레이션의 범위</h2>
+    <p>시장가 주문은 제출 시점의 현재 가상 가격을 사용합니다. 지정가 매수는 목표 가격 이하, 지정가 매도는 목표 가격 이상으로 가격 조건을 만족한 뒤 가격 갱신 시 체결됩니다. 체결가는 그 시점의 가상 가격이며 목표가보다 유리할 수 있습니다. 대기 지정가 주문은 취소할 수 있고, 주문에 필요한 모의 자금 또는 보유 수량은 대기 중 예약됩니다.</p>
+    <p>이 도구는 실제 거래소의 가격 우선·시간 우선, 주문장 유동성, 부분 체결, 시장 충격, 거래 시간, 세금, 기업행사 또는 실제 체결 지연을 재현하지 않습니다. 성과는 실제 시장에서의 결과를 예측하지 않습니다.</p>
+  </section>
+  <section>
+    <h2>이용자에게 제공하는 가치</h2>
+    <p>사용자는 시장가와 지정가의 차이, 지정가 조건이 체결에 미치는 영향, 수수료가 잔고와 손익에 미치는 효과를 가상 환경에서 확인할 수 있습니다. 자세한 조작 순서와 계산 규칙은 <a href="guide.html">이용 가이드</a>에서 확인할 수 있습니다.</p>
+    <p>이 사이트는 주문 연습과 계산 결과를 보여주는 교육용 도구입니다. 종목 추천, 투자 판단, 실제 거래 실행 또는 수익을 약속하지 않습니다.</p>
+  </section>
+  <footer><span>MockStox · 교육 목적의 가상 시뮬레이션</span><span><a href="guide.html">가이드</a> · <a href="privacy.html">개인정보</a> · <a href="terms.html">이용 조건</a></span></footer>
+</main>
+</body>
+</html>

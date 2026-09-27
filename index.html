@@ -4,7 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="web_dashboard" name="shell-type"/>
-<title>MockStox Pro - 실전 모의주식 트레이딩</title>
+<title>MockStox - 가상 주식 거래 연습</title>
+<meta name="description" content="실제 거래소 시세와 연결되지 않은 가상 주식 시뮬레이터입니다. 지정가와 시장가 주문, 수수료, 포트폴리오 손익을 연습해보세요."/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
@@ -111,7 +112,7 @@
 <span class="font-display font-extrabold text-[18px] tracking-tight text-white whitespace-nowrap">MOCK<span class="text-indigo-400">STOX</span></span>
 <span class="px-1.5 py-0.5 rounded text-[10px] font-bold font-mono tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 whitespace-nowrap">PRO</span>
 </div>
-<span class="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">실전형 가상 모의투자</span>
+<span class="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">가상 주식 거래 연습</span>
 </div>
 </div>
 <div class="hidden xl:flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-800/60 border border-slate-700/50 whitespace-nowrap shrink-0">
@@ -119,26 +120,26 @@
 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
 <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
 </span>
-<span class="text-xs font-semibold text-emerald-400 whitespace-nowrap">KRX 실시간 정규장</span>
-<span class="text-xs text-slate-400 font-mono-num whitespace-nowrap">09:00~15:30</span>
+<span class="text-xs font-semibold text-emerald-400 whitespace-nowrap">가상 시뮬레이션</span>
+<span class="text-xs text-slate-400 font-mono-num whitespace-nowrap">실제 시세 미연동</span>
 </div>
 </div>
 <!-- Center: Indices Ticker (Shrinkable/Collapsible smoothly) -->
 <div class="hidden lg:flex items-center gap-4 px-3.5 py-1.5 bg-[#191b25] rounded-xl border border-slate-700/50 shrink min-w-0 overflow-hidden">
 <div class="flex items-center gap-2 whitespace-nowrap">
-<span class="text-[11px] font-bold text-slate-400 uppercase">KOSPI</span>
+<span class="text-[11px] font-bold text-slate-400 uppercase">예시 KOSPI</span>
 <span class="text-xs font-bold text-white font-mono-num">2,684.20</span>
 <span class="text-xs font-bold text-bull-light font-mono-num flex items-center">▲ 0.85%</span>
 </div>
 <div class="w-px h-3.5 bg-slate-700/70 shrink-0"></div>
 <div class="flex items-center gap-2 whitespace-nowrap">
-<span class="text-[11px] font-bold text-slate-400 uppercase">KOSDAQ</span>
+<span class="text-[11px] font-bold text-slate-400 uppercase">예시 KOSDAQ</span>
 <span class="text-xs font-bold text-white font-mono-num">872.15</span>
 <span class="text-xs font-bold text-bear-light font-mono-num flex items-center">▼ 0.32%</span>
 </div>
 <div class="w-px h-3.5 bg-slate-700/70 shrink-0 hidden 2xl:block"></div>
 <div class="hidden 2xl:flex items-center gap-2 whitespace-nowrap">
-<span class="text-[11px] font-bold text-slate-400 uppercase">USD/KRW</span>
+<span class="text-[11px] font-bold text-slate-400 uppercase">예시 USD/KRW</span>
 <span class="text-xs font-bold text-white font-mono-num">1,348.50</span>
 <span class="text-xs font-bold text-bull-light font-mono-num">▲ 2.10</span>
 </div>
@@ -151,7 +152,7 @@
 </div>
 <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-950/70 to-slate-900 border border-indigo-500/30 whitespace-nowrap shrink-0">
 <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shrink-0"></div>
-<span class="text-xs text-slate-400 whitespace-nowrap">모의시드</span>
+<span class="text-xs text-slate-400 whitespace-nowrap">가용 예수금</span>
 <span class="text-xs font-bold text-cyan-300 font-mono-num whitespace-nowrap" id="header-seed-cash">50,000,000원</span>
 </div>
 <div class="flex items-center gap-2 pl-1 shrink-0">
@@ -159,8 +160,8 @@
 <span class="material-symbols-outlined text-white text-[18px]">person</span>
 </div>
 <div class="hidden md:flex flex-col leading-none shrink-0 whitespace-nowrap">
-<span class="text-xs font-bold text-white whitespace-nowrap">홍길동 마스터</span>
-<span class="text-[10px] text-slate-400 whitespace-nowrap mt-0.5">PRO 등급</span>
+<span class="text-xs font-bold text-white whitespace-nowrap">게스트 연습 계정</span>
+<span class="text-[10px] text-slate-400 whitespace-nowrap mt-0.5">이 기기에 저장</span>
 </div>
 </div>
 </div>
@@ -172,27 +173,27 @@
 <div class="flex flex-col gap-2 shrink-0">
 <div class="px-2.5 py-1.5 flex items-center justify-between rounded-lg bg-indigo-950/30 border border-indigo-500/20">
 <span class="text-[11px] font-bold text-indigo-300 uppercase tracking-wider whitespace-nowrap">터미널 환경</span>
-<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-600/40 text-cyan-300 whitespace-nowrap">실시간 시뮬레이션</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-600/40 text-cyan-300 whitespace-nowrap">가상 가격 시뮬레이션</span>
 </div>
 <nav class="flex flex-col gap-0.5">
-<a class="flex items-center justify-between px-3 py-2 rounded-xl bg-indigo-600 text-white font-semibold text-xs shadow-md shadow-indigo-600/25 whitespace-nowrap" href="#">
+<a class="flex items-center justify-between px-3 py-2 rounded-xl bg-indigo-600 text-white font-semibold text-xs shadow-md shadow-indigo-600/25 whitespace-nowrap" href="#dashboard">
 <div class="flex items-center gap-2 shrink-0">
 <span class="material-symbols-outlined text-[18px]">candlestick_chart</span>
 <span class="whitespace-nowrap">트레이딩 대시보드</span>
 </div>
-<span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-white/20 text-white">LIVE</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-white/20 text-white">SIM</span>
 </a>
 <a class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 text-xs font-medium transition-colors whitespace-nowrap" href="#panel-portfolio-holdings">
 <span class="material-symbols-outlined text-[18px] text-slate-400">account_balance_wallet</span>
 <span class="whitespace-nowrap">보유 자산 및 잔고</span>
 </a>
-<a class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 text-xs font-medium transition-colors whitespace-nowrap" href="#">
+<a class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 text-xs font-medium transition-colors whitespace-nowrap" href="#stock-list-container">
 <span class="material-symbols-outlined text-[18px] text-slate-400">trending_up</span>
 <span class="whitespace-nowrap">시장 급등락 탐색</span>
 </a>
-<a class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 text-xs font-medium transition-colors whitespace-nowrap" href="#">
+<a class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 text-xs font-medium transition-colors whitespace-nowrap" href="guide.html">
 <span class="material-symbols-outlined text-[18px] text-slate-400">leaderboard</span>
-<span class="whitespace-nowrap">실시간 투자 랭킹</span>
+<span class="whitespace-nowrap">모의 투자 가이드</span>
 </a>
 <a class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 text-xs font-medium transition-colors whitespace-nowrap" href="#panel-trade-history">
 <span class="material-symbols-outlined text-[18px] text-slate-400">receipt_long</span>
@@ -232,7 +233,7 @@
 <div class="p-1.5 bg-[#12141f] border-t border-slate-800 text-center shrink-0">
 <span class="text-[10px] text-slate-400 whitespace-nowrap flex items-center justify-center gap-1">
 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-        3초 단위 KRX 체결 반영
+        3초마다 가상 가격 갱신
       </span>
 </div>
 </div>
@@ -240,17 +241,32 @@
 <div class="flex flex-col gap-1.5 p-2 bg-[#161824] rounded-xl border border-slate-700/60 shrink-0">
 <div class="flex items-center justify-between text-[11px] whitespace-nowrap">
 <span class="text-slate-400">데이터 피드</span>
-<span class="font-bold text-emerald-400 font-mono-num">KRX 실시간 정상</span>
+<span class="font-bold text-emerald-400 font-mono-num">가상 피드 작동</span>
 </div>
 <div class="flex items-center justify-between text-[11px] whitespace-nowrap">
 <span class="text-slate-400">시뮬레이션 레이턴시</span>
-<span class="text-cyan-300 font-mono-num font-bold">4ms (초고속)</span>
+<span class="text-cyan-300 font-mono-num font-bold">3초 갱신 주기</span>
 </div>
 </div>
 </aside>
 <!-- MAIN VIEWPORT CONTENT (Offset for Fixed Header & Sidebar) -->
 <div class="pl-64 lg:pl-72 pt-16 min-h-screen">
-<main class="p-3.5 lg:p-5 flex flex-col gap-4 max-w-[1920px] mx-auto">
+<main class="p-3.5 lg:p-5 flex flex-col gap-4 max-w-[1920px] mx-auto" id="dashboard">
+<section class="rounded-xl border border-amber-500/30 bg-amber-950/20 px-4 py-3 text-xs leading-relaxed text-amber-100" aria-label="시뮬레이션 안내">
+<strong>가상 시뮬레이션 안내:</strong> 종목 가격·지수·호가·체결량은 교육용 임의 데이터이며 KRX 또는 실제 시장과 연결되지 않습니다. 실제 주문이나 투자 조언을 제공하지 않습니다. <a class="underline" href="about.html">데이터 생성 방식과 한계</a> · <a class="underline" href="guide.html">주문 가이드</a>
+</section>
+<section class="grid grid-cols-1 gap-3 border-b border-slate-800 pb-4 sm:grid-cols-2" aria-label="가상 시뮬레이션 설정">
+<label class="flex flex-col gap-1.5 text-xs font-semibold text-slate-300" for="simulation-scenario">가격 시나리오
+<select class="rounded-lg border border-slate-700 bg-[#191b25] px-3 py-2 text-xs text-white" id="simulation-scenario">
+<option value="balanced">균형 변동</option><option value="bullish">상승 편향</option><option value="bearish">하락 편향</option><option value="volatile">고변동</option>
+</select><span class="font-normal text-slate-500" id="scenario-description">상승과 하락이 비슷한 확률로 발생하는 가상 시나리오입니다.</span>
+</label>
+<label class="flex flex-col gap-1.5 text-xs font-semibold text-slate-300" for="starting-capital-select">초기 모의 자금
+<select class="rounded-lg border border-slate-700 bg-[#191b25] px-3 py-2 text-xs text-white" id="starting-capital-select">
+<option value="10000000">1,000만 원</option><option value="50000000">5,000만 원</option><option value="100000000">1억 원</option>
+</select><span class="font-normal text-slate-500">변경 시 기존 모의 계좌를 초기화합니다.</span>
+</label>
+</section>
 <!-- TOP ACCOUNT HUD SUMMARY (Guaranteed No Wrap & Overflow Protection for KRW / Won) -->
 <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
 <!-- 1. Total Asset -->
@@ -313,8 +329,18 @@
 </div>
 <button class="px-3 py-1.5 lg:px-3.5 lg:py-2 rounded-lg bg-indigo-600/30 hover:bg-indigo-600 border border-indigo-500/40 text-indigo-200 hover:text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow whitespace-nowrap shrink-0" id="btn-reset-account">
 <span class="material-symbols-outlined text-[16px]">restart_alt</span>
-<span class="whitespace-nowrap">5,000만 리셋</span>
+<span class="whitespace-nowrap">계좌 리셋</span>
 </button>
+</div>
+</section>
+<section class="grid grid-cols-1 gap-3 sm:grid-cols-2" aria-label="매매 손익 분석">
+<div class="border-l-2 border-emerald-400 pl-3">
+<span class="text-[11px] font-semibold text-slate-400">실현 손익 · 매도 수수료 반영</span>
+<p class="mt-1 font-mono-num text-lg font-bold text-slate-100" id="hud-realized-pnl">0원</p>
+</div>
+<div class="border-l-2 border-cyan-400 pl-3">
+<span class="text-[11px] font-semibold text-slate-400">미실현 손익 · 보유 평가액 기준</span>
+<p class="mt-1 font-mono-num text-lg font-bold text-slate-100" id="hud-unrealized-pnl">0원</p>
 </div>
 </section>
 <!-- PRO TRADING DESK: EXPANDED 2-COLUMN LAYOUT (Chart 8 cols, Orderbook 4 cols) -->
@@ -368,7 +394,7 @@
 <button class="chart-period-btn px-3 py-1 rounded-lg text-xs font-semibold bg-[#1d1f29] text-slate-300 hover:text-white hover:bg-slate-700 transition-all whitespace-nowrap" data-period="1D">일봉</button>
 </div>
 <div class="hidden sm:flex items-center gap-3 text-[11px] text-slate-400 whitespace-nowrap">
-<span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span>실시간 주가</span>
+<span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span>가상 가격</span>
 <span class="inline-flex items-center gap-1.5"><span class="w-2 h-1 rounded bg-amber-400"></span>MA 5</span>
 <span class="inline-flex items-center gap-1.5"><span class="w-2 h-1 rounded bg-sky-500"></span>MA 20</span>
 <span class="inline-flex items-center gap-1.5"><span class="w-2 h-1 rounded bg-purple-500"></span>MA 60</span>
@@ -379,12 +405,12 @@
 <!-- Realtime Price Hover Tooltip Badge -->
 <div class="absolute top-4 left-4 z-20 px-3 py-1.5 rounded-xl bg-[#1d1f29]/90 backdrop-blur-md border border-indigo-500/30 flex items-center gap-2 shadow-lg" id="chart-hover-indicator">
 <span class="w-2 h-2 rounded-full bg-bull animate-ping"></span>
-<span class="text-xs text-slate-300 font-medium whitespace-nowrap">현재 실시간 체결가:</span>
+<span class="text-xs text-slate-300 font-medium whitespace-nowrap">현재 가상 가격:</span>
 <span class="text-xs font-bold font-mono-num text-bull-light whitespace-nowrap" id="chart-tooltip-val">78,400 KRW</span>
 </div>
 <!-- Interactive SVG Visual Canvas (High resolution wide 1000px viewbox) -->
 <div class="relative w-full flex-1 my-1">
-<svg class="w-full h-full" id="trading-chart-svg" role="img" aria-label="실시간 캔들 주가 차트" preserveAspectRatio="none" viewBox="0 0 1000 620">
+<svg class="w-full h-full" id="trading-chart-svg" role="img" aria-label="가상 캔들 가격 차트" preserveAspectRatio="none" viewBox="0 0 1000 620">
 <g id="chart-grid"></g>
 <g id="chart-volume-bars"></g>
 <g id="chart-moving-averages"></g>
@@ -403,9 +429,9 @@
 <div class="flex items-center justify-between pb-1.5 border-b border-slate-800 whitespace-nowrap">
 <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap">
 <span class="material-symbols-outlined text-indigo-400 text-[16px]">stacked_bar_chart</span>
-              실시간 10단계 호가창
+              가상 10단계 호가창
             </span>
-<span class="text-[11px] text-cyan-300 font-medium whitespace-nowrap bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40">호가 클릭 시 자동입력</span>
+<span class="text-[11px] text-cyan-300 font-medium whitespace-nowrap bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40">가격 선택 시 지정가 입력</span>
 </div>
 <!-- Asks (매도호가) -->
 <div class="flex flex-col gap-0.5 my-1 overflow-hidden" id="orderbook-asks"></div>
@@ -413,7 +439,7 @@
 <div class="py-1 px-3 my-0.5 rounded-lg bg-[#1c1f2e] border border-slate-700/60 flex items-center justify-between whitespace-nowrap">
 <span class="text-[11px] font-bold text-slate-400 whitespace-nowrap">현재 기준가</span>
 <span class="text-xs font-black text-white font-mono-num whitespace-nowrap" id="orderbook-mid-price">78,400</span>
-<span class="text-[11px] font-bold text-bull-light font-mono-num whitespace-nowrap">+1.82%</span>
+<span class="text-[11px] font-bold text-bull-light font-mono-num whitespace-nowrap" id="orderbook-delta">+1.82%</span>
 </div>
 <!-- Bids (매수호가) -->
 <div class="flex flex-col gap-0.5 my-1 overflow-hidden" id="orderbook-bids"></div>
@@ -431,6 +457,7 @@
 <button class="flex-1 py-1 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs transition-all whitespace-nowrap" id="order-exec-limit">지정가</button>
 <button class="flex-1 py-1 rounded-lg bg-[#1c1f2e] border border-slate-700 text-slate-400 hover:text-white font-medium text-xs transition-all whitespace-nowrap" id="order-exec-market">시장가</button>
 </div>
+<p class="text-[11px] leading-relaxed text-slate-500" id="order-mode-description">매수 지정가는 현재가보다 낮게 설정하세요. 조건에 도달하면 가상 체결됩니다.</p>
 <!-- Available Balance / Holdings Pill -->
 <div class="bg-[#11131c] border border-slate-800 rounded-xl px-3 py-2 flex items-center justify-between whitespace-nowrap">
 <span class="text-xs text-slate-400 whitespace-nowrap shrink-0" id="order-context-label">주문가능 예수금</span>
@@ -439,7 +466,7 @@
 <!-- Order Price Stepper -->
 <div class="flex flex-col gap-1">
 <div class="flex items-center justify-between text-xs whitespace-nowrap">
-<span class="text-slate-400 whitespace-nowrap">주문 가격 (KRW)</span>
+<span class="text-slate-400 whitespace-nowrap">지정가 (KRW)</span>
 <span class="text-[11px] text-slate-500 font-mono-num whitespace-nowrap" id="price-step-hint">호가단위 100원</span>
 </div>
 <div class="flex items-center bg-[#0c0e17] border border-slate-700/80 rounded-xl overflow-hidden focus-within:border-indigo-400">
@@ -488,11 +515,11 @@
 <div class="flex flex-col gap-1.5 pt-2">
 <button class="w-full py-3 rounded-xl bg-bull hover:bg-rose-600 text-white font-bold text-xs shadow-lg shadow-rose-950/50 transition-all flex items-center justify-center gap-1.5 whitespace-nowrap" id="btn-submit-order">
 <span class="material-symbols-outlined text-[18px]">bolt</span>
-<span class="whitespace-nowrap" id="order-submit-text">삼성전자 10주 매수 주문</span>
+<span class="whitespace-nowrap" id="order-submit-text">삼성전자 10주 지정가 매수 접수</span>
 </button>
 <div class="flex items-center justify-between text-[11px] text-slate-500 px-1 whitespace-nowrap">
-<span class="whitespace-nowrap">가상 체결 슬리피지: 0%</span>
-<span class="text-emerald-400 font-semibold whitespace-nowrap">● 즉시 체결 활성</span>
+<span class="whitespace-nowrap" id="order-execution-hint">지정가: 가격 조건 충족 후 체결</span>
+<span class="text-emerald-400 font-semibold whitespace-nowrap">가상 주문 엔진</span>
 </div>
 </div>
 </div>
@@ -510,8 +537,13 @@
 </button>
 <button class="px-4 py-2 rounded-xl bg-[#1c1f2e] text-slate-400 hover:text-white font-bold text-xs flex items-center gap-2 transition-colors whitespace-nowrap" id="tab-btn-history">
 <span class="material-symbols-outlined text-[18px]">history</span>
-<span class="whitespace-nowrap">실시간 체결 내역</span>
+<span class="whitespace-nowrap">체결 내역</span>
 <span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[11px] font-mono-num" id="badge-history-count">0</span>
+</button>
+<button class="px-4 py-2 rounded-xl bg-[#1c1f2e] text-slate-400 hover:text-white font-bold text-xs flex items-center gap-2 transition-colors whitespace-nowrap" id="tab-btn-pending">
+<span class="material-symbols-outlined text-[18px]">pending_actions</span>
+<span class="whitespace-nowrap">대기 주문</span>
+<span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[11px] font-mono-num" id="badge-pending-count">0</span>
 </button>
 </div>
 <div class="flex items-center gap-2">
@@ -556,6 +588,8 @@
 <th class="py-3 px-4 text-right whitespace-nowrap">체결 가격</th>
 <th class="py-3 px-4 text-right whitespace-nowrap">체결 수량</th>
 <th class="py-3 px-4 text-right whitespace-nowrap">정산 금액</th>
+<th class="py-3 px-4 text-right whitespace-nowrap">실현 손익</th>
+<th class="py-3 px-4 whitespace-nowrap">매매 메모</th>
 <th class="py-3 px-4 text-center rounded-r-lg whitespace-nowrap">체결 상태</th>
 </tr>
 </thead>
@@ -568,6 +602,25 @@
 <span class="text-xs font-medium whitespace-nowrap">체결된 거래 내역이 아직 없습니다.</span>
 </div>
 </div>
+<!-- TAB 3: PENDING ORDERS -->
+<div class="hidden overflow-x-auto min-h-[180px]" id="panel-pending-orders">
+<table class="w-full text-left text-xs whitespace-nowrap">
+<thead><tr class="bg-[#11131c] text-slate-400 font-bold border-b border-slate-800">
+<th class="py-3 px-4">접수 시각</th><th class="py-3 px-4">구분</th><th class="py-3 px-4">종목</th><th class="py-3 px-4 text-right">목표 가격</th><th class="py-3 px-4 text-right">수량</th><th class="py-3 px-4">체결 조건</th><th class="py-3 px-4 text-center">관리</th>
+</tr></thead>
+<tbody class="divide-y divide-slate-800/80" id="pending-orders-body"></tbody>
+</table>
+<div class="hidden flex-col items-center justify-center py-12 text-slate-500" id="pending-orders-empty-state">
+<span class="material-symbols-outlined text-[42px] text-slate-600 mb-2">hourglass_empty</span>
+<span class="text-xs font-medium">대기 중인 지정가 주문이 없습니다.</span>
+</div>
+</div>
+</section>
+<section class="border-y border-slate-800 py-5" id="simulation-method">
+<h2 class="text-lg font-bold text-white">시뮬레이션 작동 방식</h2>
+<p class="mt-2 max-w-4xl text-sm leading-6 text-slate-300">이 연습 도구는 6개 종목의 코드에 기록된 예시 가격에서 시작합니다. 3초마다 일부 종목 가격이 호가 단위만큼 무작위로 움직이며, 거래량·호가 잔량과 초기 차트 봉도 시뮬레이션으로 생성됩니다. 과거 실측 데이터, 실제 매수·매도 주문, KRX 체결 정보는 사용하지 않습니다.</p>
+<p class="mt-2 max-w-4xl text-sm leading-6 text-slate-300">시장가 주문은 제출 시점의 가상 가격으로 체결됩니다. 지정가 매수는 목표가 이하, 지정가 매도는 목표가 이상으로 가격이 움직인 뒤 시뮬레이션 갱신에서 체결됩니다. 지정가 주문은 대기 중 자금 또는 보유 수량을 예약하며, 체결 전 취소할 수 있습니다.</p>
+<a class="mt-3 inline-flex text-sm font-semibold text-cyan-300 underline" href="guide.html">주문·수수료 가이드 보기</a>
 </section>
 </main>
 </div>
@@ -579,6 +632,12 @@
 <span class="text-[11px] text-slate-300 whitespace-nowrap" id="toast-message">정상적으로 주문이 체결되었습니다.</span>
 </div>
 </div>
+<footer class="border-t border-slate-800 bg-[#11131c] px-5 py-5 pl-64 text-xs text-slate-400 lg:pl-72">
+<div class="mx-auto flex max-w-[1920px] flex-wrap items-center justify-between gap-3">
+<span>MockStox는 교육 목적의 가상 시뮬레이터이며 실제 시장 데이터·투자 서비스를 제공하지 않습니다.</span>
+<nav class="flex flex-wrap gap-4" aria-label="서비스 정보"><a class="hover:text-white" href="about.html">서비스·데이터 안내</a><a class="hover:text-white" href="guide.html">이용 가이드</a><a class="hover:text-white" href="privacy.html">개인정보처리방침</a><a class="hover:text-white" href="terms.html">이용 조건</a></nav>
+</div>
+</footer>
 <!-- CORE TRADING JS LOGIC (Completely preserved & adapted) -->
 <script>
   (function() {
@@ -595,12 +654,22 @@
       { id: '068270', name: '셀트리온', market: 'KOSPI', price: 184300, prevClose: 185500, volume: 721900, high: 186400, low: 183200, step: 500 }
     ];
     const CHART_PERIOD_MS = { '1m': 60000, '5m': 300000, '10m': 600000, '30m': 1800000, '1h': 3600000, '1D': 86400000 };
+    const SIMULATION_SCENARIOS = {
+      balanced: { moveChance: 0.45, riseChance: 0.5, maxTicks: 1, description: '상승과 하락이 비슷한 확률로 발생하는 가상 시나리오입니다.' },
+      bullish: { moveChance: 0.55, riseChance: 0.68, maxTicks: 1, description: '가격 상승 움직임이 더 자주 발생하는 가상 시나리오입니다.' },
+      bearish: { moveChance: 0.55, riseChance: 0.32, maxTicks: 1, description: '가격 하락 움직임이 더 자주 발생하는 가상 시나리오입니다.' },
+      volatile: { moveChance: 0.8, riseChance: 0.5, maxTicks: 3, description: '가격 갱신 빈도와 한 번의 변동 폭이 커지는 가상 시나리오입니다.' }
+    };
 
     let appState = {
       cash: DEFAULT_SEED_CASH,
+      seedCash: DEFAULT_SEED_CASH,
+      costBasisVersion: 1,
       holdings: {},
       history: [],
       watchlist: ['005930', '000660'],
+      pendingOrders: [],
+      scenario: 'balanced',
       activeStockId: '005930',
       activeFilter: 'all',
       orderSide: 'buy',
@@ -614,6 +683,20 @@
         try {
           const parsed = JSON.parse(saved);
           appState = { ...appState, ...parsed };
+          appState.seedCash = [10000000, 50000000, 100000000].includes(Number(parsed.seedCash)) ? Number(parsed.seedCash) : DEFAULT_SEED_CASH;
+          appState.scenario = Object.hasOwn(SIMULATION_SCENARIOS, parsed.scenario) ? parsed.scenario : 'balanced';
+          appState.pendingOrders = Array.isArray(parsed.pendingOrders) ? parsed.pendingOrders : [];
+          (parsed.marketStocks || []).forEach(savedStock => {
+            const stock = INITIAL_STOCKS.find(item => item.id === savedStock.id);
+            if (stock && Number.isFinite(savedStock.price)) {
+              stock.price = savedStock.price;
+              stock.high = Number.isFinite(savedStock.high) ? savedStock.high : stock.price;
+              stock.low = Number.isFinite(savedStock.low) ? savedStock.low : stock.price;
+              stock.volume = Number.isFinite(savedStock.volume) ? savedStock.volume : stock.volume;
+            }
+          });
+          if (parsed.costBasisVersion !== 1) migrateLegacyCostBasis();
+          appState.costBasisVersion = 1;
         } catch (e) {
           console.error('State load error', e);
         }
@@ -623,10 +706,68 @@
     function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         cash: appState.cash,
+        seedCash: appState.seedCash,
+        costBasisVersion: appState.costBasisVersion,
         holdings: appState.holdings,
         history: appState.history,
-        watchlist: appState.watchlist
+        watchlist: appState.watchlist,
+        pendingOrders: appState.pendingOrders,
+        scenario: appState.scenario,
+        marketStocks: appState.pendingOrders.length ? INITIAL_STOCKS.map(({ id, price, high, low, volume }) => ({ id, price, high, low, volume })) : []
       }));
+    }
+
+    function migrateLegacyCostBasis() {
+      const ledger = {};
+      appState.history.slice().reverse().forEach(transaction => {
+        const quantity = Number(transaction.qty) || 0;
+        if (!quantity || !transaction.stockId) return;
+
+        const position = ledger[transaction.stockId] || { qty: 0, avgPrice: 0 };
+        if (transaction.side === 'BUY') {
+          const buyCost = Number(transaction.total) || (transaction.price * quantity + Math.round(transaction.price * quantity * 0.00015));
+          position.avgPrice = ((position.avgPrice * position.qty) + buyCost) / (position.qty + quantity);
+          position.qty += quantity;
+          transaction.realizedPnl = null;
+        } else if (transaction.side === 'SELL') {
+          const saleProceeds = Number(transaction.total) || Math.max(0, transaction.price * quantity - Math.round(transaction.price * quantity * 0.00015));
+          transaction.realizedPnl = saleProceeds - position.avgPrice * quantity;
+          position.qty = Math.max(0, position.qty - quantity);
+          if (position.qty === 0) position.avgPrice = 0;
+        }
+        ledger[transaction.stockId] = position;
+      });
+
+      Object.entries(appState.holdings).forEach(([stockId, holding]) => {
+        const position = ledger[stockId];
+        if (position && position.qty === holding.qty) {
+          holding.avgPrice = position.avgPrice;
+        } else if (Number.isFinite(holding.avgPrice)) {
+          holding.avgPrice *= 1.00015;
+        }
+      });
+    }
+
+    function getReservedCash() {
+      return appState.pendingOrders
+        .filter(order => order.side === 'BUY')
+        .reduce((total, order) => total + order.price * order.qty + Math.round(order.price * order.qty * 0.00015), 0);
+    }
+
+    function getAvailableCash() {
+      return Math.max(0, appState.cash - getReservedCash());
+    }
+
+    function getAvailableShares(stockId) {
+      const holding = appState.holdings[stockId] || { qty: 0 };
+      const reservedQty = appState.pendingOrders
+        .filter(order => order.side === 'SELL' && order.stockId === stockId)
+        .reduce((total, order) => total + order.qty, 0);
+      return Math.max(0, holding.qty - reservedQty);
+    }
+
+    function renderScenarioDescription() {
+      document.getElementById('scenario-description').textContent = SIMULATION_SCENARIOS[appState.scenario].description;
     }
 
     const fmtWon = (num) => Math.round(num).toLocaleString('ko-KR');
@@ -662,6 +803,7 @@
     function calcMetrics() {
       let stockValuation = 0;
       let totalPurchaseCost = 0;
+      const realizedPnl = appState.history.reduce((total, transaction) => total + (Number(transaction.realizedPnl) || 0), 0);
 
       Object.entries(appState.holdings).forEach(([id, item]) => {
         if (item.qty > 0) {
@@ -673,29 +815,36 @@
       });
 
       const totalAssets = appState.cash + stockValuation;
-      const totalPnl = totalAssets - DEFAULT_SEED_CASH;
-      const totalRate = ((totalPnl / DEFAULT_SEED_CASH) * 100).toFixed(2);
+      const totalPnl = totalAssets - appState.seedCash;
+      const unrealizedPnl = stockValuation - totalPurchaseCost;
+      const totalRate = ((totalPnl / appState.seedCash) * 100).toFixed(2);
       const holdingsCount = Object.values(appState.holdings).filter(h => h.qty > 0).length;
 
-      return { totalAssets, stockValuation, totalPnl, totalRate, holdingsCount };
+      return { totalAssets, stockValuation, totalPnl, totalRate, realizedPnl, unrealizedPnl, holdingsCount };
     }
 
     function renderHUD() {
-      const { totalAssets, totalPnl, totalRate, holdingsCount } = calcMetrics();
+      const { totalAssets, totalPnl, totalRate, realizedPnl, unrealizedPnl, holdingsCount } = calcMetrics();
       const elAsset = document.getElementById('hud-total-asset');
       const elCash = document.getElementById('hud-cash-balance');
       const elPnl = document.getElementById('hud-total-pnl');
       const elRate = document.getElementById('hud-total-rate');
       const elHoldCount = document.getElementById('hud-holdings-count');
+      const elRealizedPnl = document.getElementById('hud-realized-pnl');
+      const elUnrealizedPnl = document.getElementById('hud-unrealized-pnl');
       const headerSeed = document.getElementById('header-seed-cash');
 
       elAsset.textContent = fmtWon(totalAssets);
-      elCash.textContent = fmtWon(appState.cash);
+      elCash.textContent = fmtWon(getAvailableCash());
       elPnl.textContent = fmtSignWon(totalPnl);
       elRate.textContent = `${totalPnl > 0 ? '+' : ''}${totalRate}%`;
       elHoldCount.textContent = holdingsCount;
+      elRealizedPnl.textContent = fmtSignWon(realizedPnl);
+      elUnrealizedPnl.textContent = fmtSignWon(unrealizedPnl);
+      elRealizedPnl.className = `mt-1 font-mono-num text-lg font-bold ${realizedPnl >= 0 ? 'text-bull-light' : 'text-bear-light'}`;
+      elUnrealizedPnl.className = `mt-1 font-mono-num text-lg font-bold ${unrealizedPnl >= 0 ? 'text-bull-light' : 'text-bear-light'}`;
       if (headerSeed) {
-        headerSeed.textContent = `${fmtWon(appState.cash)}원`;
+        headerSeed.textContent = `${fmtWon(getAvailableCash())}원`;
       }
 
       if (totalPnl > 0) {
@@ -822,7 +971,7 @@
 
       const priceInput = document.getElementById('input-order-price');
       if (appState.orderMode === 'limit') {
-        priceInput.value = stk.price;
+        priceInput.value = stk.price + (appState.orderSide === 'buy' ? -stk.step : stk.step);
         priceInput.step = stk.step;
       }
       document.getElementById('price-step-hint').textContent = `호가단위 ${stk.step}원`;
@@ -842,8 +991,12 @@
       const asksContainer = document.getElementById('orderbook-asks');
       const bidsContainer = document.getElementById('orderbook-bids');
       const midEl = document.getElementById('orderbook-mid-price');
+      const deltaEl = document.getElementById('orderbook-delta');
 
       midEl.textContent = fmtWon(basePrice);
+      const deltaPct = ((basePrice - stk.prevClose) / stk.prevClose) * 100;
+      deltaEl.textContent = `${deltaPct >= 0 ? '+' : ''}${deltaPct.toFixed(2)}%`;
+      deltaEl.className = `text-[11px] font-bold font-mono-num whitespace-nowrap ${deltaPct >= 0 ? 'text-bull-light' : 'text-bear-light'}`;
       asksContainer.innerHTML = '';
       bidsContainer.innerHTML = '';
 
@@ -1049,112 +1202,164 @@
       document.getElementById('preview-raw-total').textContent = `${fmtWon(rawTotal)}원`;
       document.getElementById('preview-fee-total').textContent = `${fmtWon(fee)}원`;
       document.getElementById('preview-final-total').textContent = `${fmtWon(finalTotal)}원`;
+      document.getElementById('order-mode-description').textContent = isMarket
+        ? '시장가는 제출 즉시 현재 가상 가격으로 체결됩니다.'
+        : `${isBuy ? '매수 지정가는 현재가 이하' : '매도 지정가는 현재가 이상'}로 설정하고, 가격 조건을 만족한 뒤 시뮬레이션 갱신에서 체결됩니다.`;
+      document.getElementById('order-execution-hint').textContent = isMarket ? '시장가: 현재 가상 가격으로 즉시 체결' : '지정가: 조건 도달 후 체결';
+      document.getElementById('btn-price-minus').disabled = isMarket;
+      document.getElementById('btn-price-plus').disabled = isMarket;
 
       const btn = document.getElementById('btn-submit-order');
       const submitText = document.getElementById('order-submit-text');
-      const holdingInfo = appState.holdings[stk.id] || { qty: 0 };
 
-      document.getElementById('holding-qty-hint').textContent = `보유: ${holdingInfo.qty}주`;
+      document.getElementById('holding-qty-hint').textContent = `주문 가능: ${getAvailableShares(stk.id)}주`;
 
       if (isBuy) {
         document.getElementById('order-context-label').textContent = '주문가능 예수금';
-        document.getElementById('order-context-value').textContent = `${fmtWon(appState.cash)}원`;
-        submitText.textContent = `${stk.name} ${qty}주 매수 주문`;
+        document.getElementById('order-context-value').textContent = `${fmtWon(getAvailableCash())}원`;
+        submitText.textContent = `${stk.name} ${qty}주 ${isMarket ? '시장가 매수' : '지정가 매수 접수'}`;
         btn.className = 'w-full py-3 rounded-xl bg-bull hover:bg-rose-600 text-white font-bold text-xs shadow-lg shadow-rose-950/50 transition-all flex items-center justify-center gap-1.5 whitespace-nowrap';
       } else {
         document.getElementById('order-context-label').textContent = '매도 가능 수량';
-        document.getElementById('order-context-value').textContent = `${holdingInfo.qty}주 (${fmtWon(holdingInfo.qty * stk.price)}원)`;
-        submitText.textContent = `${stk.name} ${qty}주 매도 주문`;
+        const availableShares = getAvailableShares(stk.id);
+        document.getElementById('order-context-value').textContent = `${availableShares}주 (${fmtWon(availableShares * stk.price)}원)`;
+        submitText.textContent = `${stk.name} ${qty}주 ${isMarket ? '시장가 매도' : '지정가 매도 접수'}`;
         btn.className = 'w-full py-3 rounded-xl bg-bear hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-lg shadow-sky-950/50 transition-all flex items-center justify-center gap-1.5 whitespace-nowrap';
       }
+    }
+
+    function executeOrderFill(order, executionPrice) {
+      const isBuy = order.side === 'BUY';
+      const rawAmount = executionPrice * order.qty;
+      const fee = Math.round(rawAmount * 0.00015);
+      const holding = appState.holdings[order.stockId] || { qty: 0, avgPrice: 0 };
+      const realizedPnl = isBuy ? null : Math.max(0, rawAmount - fee) - (holding.avgPrice * order.qty);
+
+      if (isBuy) {
+        const totalCost = rawAmount + fee;
+        if (totalCost > appState.cash) return false;
+
+        appState.cash -= totalCost;
+        const newQty = holding.qty + order.qty;
+        holding.avgPrice = ((holding.avgPrice * holding.qty) + totalCost) / newQty;
+        holding.qty = newQty;
+        appState.holdings[order.stockId] = holding;
+      } else {
+        if (holding.qty < order.qty) return false;
+
+        appState.cash += Math.max(0, rawAmount - fee);
+        holding.qty -= order.qty;
+        if (holding.qty === 0) {
+          delete appState.holdings[order.stockId];
+        } else {
+          appState.holdings[order.stockId] = holding;
+        }
+      }
+
+      const now = new Date();
+      const total = isBuy ? rawAmount + fee : Math.max(0, rawAmount - fee);
+      appState.history.unshift({
+        id: 'TX' + Date.now().toString().slice(-6),
+        time: `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`,
+        side: order.side,
+        stockId: order.stockId,
+        stockName: order.stockName,
+        price: executionPrice,
+        qty: order.qty,
+        total,
+        note: '',
+        realizedPnl
+      });
+
+      saveState();
+      renderHUD();
+      renderHoldingsTable();
+      renderHistoryTable();
+      renderPendingOrders();
+      updateOrderPreview();
+      showToast(`${order.mode === 'limit' ? '지정가 ' : ''}${isBuy ? '매수' : '매도'} 체결 완료`, `${order.stockName} ${order.qty}주가 ${fmtWon(executionPrice)}원에 체결되었습니다.`);
+      return true;
     }
 
     function handleOrderSubmit() {
       const stk = getActiveStock();
       const isBuy = appState.orderSide === 'buy';
       const isMarket = appState.orderMode === 'market';
+      const enteredPrice = Number(document.getElementById('input-order-price').value);
+      const price = isMarket ? stk.price : enteredPrice;
+      const qty = Number.parseInt(document.getElementById('input-order-qty').value, 10);
 
-      const price = isMarket ? stk.price : (parseFloat(document.getElementById('input-order-price').value) || 0);
-      const qty = parseInt(document.getElementById('input-order-qty').value, 10) || 0;
-
-      if (price <= 0 || qty <= 0) {
-        showToast('주문 실패', '유효한 가격과 수량을 입력해주세요.', false);
+      if (!Number.isInteger(price) || price <= 0 || !Number.isInteger(qty) || qty <= 0) {
+        showToast('주문 실패', '호가 단위에 맞는 가격과 1주 이상의 수량을 입력해주세요.', false);
+        return;
+      }
+      if (!isMarket && price % stk.step !== 0) {
+        showToast('주문 실패', `이 종목의 호가 단위는 ${fmtWon(stk.step)}원입니다.`, false);
         return;
       }
 
-      const rawAmount = price * qty;
-      const fee = Math.round(rawAmount * 0.00015);
-      const totalCost = rawAmount + fee;
+      const order = {
+        id: `ORD-${Date.now()}-${Math.floor(Math.random() * 100000)}`,
+        side: isBuy ? 'BUY' : 'SELL',
+        mode: appState.orderMode,
+        stockId: stk.id,
+        stockName: stk.name,
+        price,
+        qty,
+        createdAt: Date.now()
+      };
 
       if (isBuy) {
-        if (totalCost > appState.cash) {
-          showToast('주문 불가', '예수금이 부족합니다. 수량을 조정해주세요.', false);
+        const requiredCash = price * qty + Math.round(price * qty * 0.00015);
+        if (requiredCash > getAvailableCash()) {
+          showToast('주문 불가', '주문 가능 예수금이 부족합니다. 가격이나 수량을 조정해주세요.', false);
           return;
         }
-
-        appState.cash -= totalCost;
-        const currentHold = appState.holdings[stk.id] || { qty: 0, avgPrice: 0 };
-        const newTotalQty = currentHold.qty + qty;
-        const newAvgPrice = Math.round(((currentHold.avgPrice * currentHold.qty) + rawAmount) / newTotalQty);
-
-        appState.holdings[stk.id] = { qty: newTotalQty, avgPrice: newAvgPrice };
-
-        const now = new Date();
-        const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
-        appState.history.unshift({
-          id: 'TX' + Date.now().toString().slice(-6),
-          time: timeStr,
-          side: 'BUY',
-          stockId: stk.id,
-          stockName: stk.name,
-          price: price,
-          qty: qty,
-          total: totalCost
-        });
-
-        saveState();
-        renderHUD();
-        renderHoldingsTable();
-        renderHistoryTable();
-        updateOrderPreview();
-        showToast('매수 체결 완료', `${stk.name} ${qty}주가 ${fmtWon(price)}원에 즉시 체결되었습니다.`);
-      } else {
-        const currentHold = appState.holdings[stk.id] || { qty: 0, avgPrice: 0 };
-        if (currentHold.qty < qty) {
-          showToast('주문 불가', `보유 수량(${currentHold.qty}주)을 초과하여 매도할 수 없습니다.`, false);
-          return;
-        }
-
-        const netProceeds = rawAmount - fee;
-        appState.cash += netProceeds;
-        currentHold.qty -= qty;
-
-        if (currentHold.qty <= 0) {
-          delete appState.holdings[stk.id];
-        } else {
-          appState.holdings[stk.id] = currentHold;
-        }
-
-        const now = new Date();
-        const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
-        appState.history.unshift({
-          id: 'TX' + Date.now().toString().slice(-6),
-          time: timeStr,
-          side: 'SELL',
-          stockId: stk.id,
-          stockName: stk.name,
-          price: price,
-          qty: qty,
-          total: netProceeds
-        });
-
-        saveState();
-        renderHUD();
-        renderHoldingsTable();
-        renderHistoryTable();
-        updateOrderPreview();
-        showToast('매도 체결 완료', `${stk.name} ${qty}주 매도 정산 ${fmtWon(netProceeds)}원이 입금되었습니다.`);
+      } else if (qty > getAvailableShares(stk.id)) {
+        showToast('주문 불가', `주문 가능 수량(${getAvailableShares(stk.id)}주)을 초과했습니다.`, false);
+        return;
       }
+
+      if (isMarket) {
+        if (!executeOrderFill(order, stk.price)) {
+          showToast('주문 실패', '현재 잔고로 주문을 체결할 수 없습니다.', false);
+        }
+        return;
+      }
+
+      if (isBuy && price >= stk.price) {
+        showToast('지정가 확인', '매수 지정가는 현재가보다 낮게 설정해주세요. 현재가 즉시 매수는 시장가를 선택하세요.', false);
+        return;
+      }
+      if (!isBuy && price <= stk.price) {
+        showToast('지정가 확인', '매도 지정가는 현재가보다 높게 설정해주세요. 현재가 즉시 매도는 시장가를 선택하세요.', false);
+        return;
+      }
+
+      appState.pendingOrders.unshift(order);
+      saveState();
+      renderPendingOrders();
+      renderHUD();
+      updateOrderPreview();
+      showToast('지정가 주문 접수', `${stk.name} ${qty}주 ${isBuy ? '매수' : '매도'} 대기 중. 가격 도달 시 가상 체결됩니다.`);
+    }
+
+    function processPendingOrders() {
+      const matchedOrders = appState.pendingOrders.filter(order => {
+        const stock = INITIAL_STOCKS.find(item => item.id === order.stockId);
+        return stock && (order.side === 'BUY' ? stock.price <= order.price : stock.price >= order.price);
+      });
+
+      matchedOrders.forEach(order => {
+        const stock = INITIAL_STOCKS.find(item => item.id === order.stockId);
+        appState.pendingOrders = appState.pendingOrders.filter(item => item.id !== order.id);
+        if (!executeOrderFill(order, stock.price)) {
+          saveState();
+          renderPendingOrders();
+          renderHUD();
+          showToast('대기 주문 취소', `${order.stockName} 주문을 잔고 부족으로 취소했습니다.`, false);
+        }
+      });
     }
 
     function renderHoldingsTable() {
@@ -1200,8 +1405,8 @@
           <td class="py-3.5 px-4 text-right ${isUp ? 'text-bull-light' : 'text-bear-light'} font-mono-num font-bold whitespace-nowrap">${fmtSignWon(pnl)}</td>
           <td class="py-3.5 px-4 text-right ${isUp ? 'text-bull-light' : 'text-bear-light'} font-mono-num font-bold whitespace-nowrap">${isUp ? '+' : ''}${pnlRate}%</td>
           <td class="py-3.5 px-4 text-center whitespace-nowrap">
-            <button class="btn-instant-sell px-3 py-1 rounded-lg bg-bear/15 hover:bg-bear hover:text-slate-950 text-bear-light text-xs font-bold transition-all border border-bear/30 whitespace-nowrap" data-id="${id}" data-qty="${item.qty}">
-              전량 즉시매도
+            <button class="btn-instant-sell px-3 py-1 rounded-lg bg-bear/15 hover:bg-bear hover:text-slate-950 text-bear-light text-xs font-bold transition-all border border-bear/30 whitespace-nowrap" data-id="${id}" data-qty="${getAvailableShares(id)}" ${getAvailableShares(id) === 0 ? 'disabled' : ''}>
+              ${getAvailableShares(id) > 0 ? `가용 ${getAvailableShares(id)}주 시장가 매도` : '매도 수량 예약 중'}
             </button>
           </td>
         `;
@@ -1215,7 +1420,9 @@
           const targetQty = parseInt(e.currentTarget.getAttribute('data-qty'), 10);
           setActiveStock(targetId);
           appState.orderSide = 'sell';
+          appState.orderMode = 'market';
           syncOrderSideUI();
+          syncOrderModeUI();
           document.getElementById('input-order-qty').value = targetQty;
           updateOrderPreview();
           handleOrderSubmit();
@@ -1257,14 +1464,70 @@
           <td class="py-3 px-4 text-right text-white font-mono-num whitespace-nowrap">${fmtWon(tx.price)}원</td>
           <td class="py-3 px-4 text-right text-white font-mono-num font-semibold whitespace-nowrap">${tx.qty}주</td>
           <td class="py-3 px-4 text-right font-bold text-white font-mono-num whitespace-nowrap">${fmtWon(tx.total)}원</td>
+          <td class="py-3 px-4 text-right font-mono-num whitespace-nowrap ${Number(tx.realizedPnl) >= 0 ? 'text-bull-light' : 'text-bear-light'}">${isBuy ? '-' : fmtSignWon(tx.realizedPnl || 0)}</td>
+          <td class="py-3 px-4"><input class="history-note min-w-40 rounded border border-slate-700 bg-[#0c0e17] px-2 py-1 text-xs text-white placeholder:text-slate-500" maxlength="160" aria-label="${tx.stockName} 매매 메모" placeholder="매매 복기 메모" type="text"></td>
           <td class="py-3 px-4 text-center whitespace-nowrap">
             <span class="text-[11px] text-emerald-400 font-medium inline-flex items-center gap-1 whitespace-nowrap">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 체결완료
             </span>
           </td>
         `;
+        const noteInput = tr.querySelector('.history-note');
+        noteInput.value = tx.note || '';
+        noteInput.addEventListener('input', () => {
+          tx.note = noteInput.value;
+          saveState();
+        });
         tbody.appendChild(tr);
       });
+    }
+
+    function renderPendingOrders() {
+      const tbody = document.getElementById('pending-orders-body');
+      const emptyState = document.getElementById('pending-orders-empty-state');
+      const badgeCount = document.getElementById('badge-pending-count');
+      tbody.innerHTML = '';
+      badgeCount.textContent = appState.pendingOrders.length;
+
+      if (appState.pendingOrders.length === 0) {
+        emptyState.classList.remove('hidden');
+        emptyState.classList.add('flex');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      emptyState.classList.remove('flex');
+
+      appState.pendingOrders.forEach(order => {
+        const isBuy = order.side === 'BUY';
+        const row = document.createElement('tr');
+        const submittedAt = new Date(order.createdAt);
+        const time = submittedAt.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+        row.className = 'border-b border-slate-800/80 whitespace-nowrap';
+        row.innerHTML = `
+          <td class="py-3 px-4 text-slate-400 font-mono-num">${time}</td>
+          <td class="py-3 px-4 ${isBuy ? 'text-bull-light' : 'text-bear-light'} font-bold">${isBuy ? '매수 대기' : '매도 대기'}</td>
+          <td class="py-3 px-4 text-white font-bold">${order.stockName} <span class="text-slate-400 font-mono-num">(${order.stockId})</span></td>
+          <td class="py-3 px-4 text-right text-white font-mono-num">${fmtWon(order.price)}원</td>
+          <td class="py-3 px-4 text-right text-white font-mono-num">${order.qty}주</td>
+          <td class="py-3 px-4 text-slate-400">현재가 ${isBuy ? '≤' : '≥'} 지정가</td>
+          <td class="py-3 px-4 text-center"><button class="btn-cancel-pending rounded border border-slate-600 px-2.5 py-1 text-slate-300 hover:border-rose-400 hover:text-white" data-id="${order.id}">취소</button></td>
+        `;
+        row.querySelector('.btn-cancel-pending').addEventListener('click', () => cancelPendingOrder(order.id));
+        tbody.appendChild(row);
+      });
+    }
+
+    function cancelPendingOrder(orderId) {
+      const order = appState.pendingOrders.find(item => item.id === orderId);
+      if (!order) return;
+
+      appState.pendingOrders = appState.pendingOrders.filter(item => item.id !== orderId);
+      saveState();
+      renderPendingOrders();
+      renderHUD();
+      updateOrderPreview();
+      showToast('대기 주문 취소', `${order.stockName} ${order.qty}주 주문을 취소했습니다.`);
     }
 
     function syncOrderSideUI() {
@@ -1282,12 +1545,23 @@
       updateOrderPreview();
     }
 
+    function syncOrderModeUI() {
+      const limitBtn = document.getElementById('order-exec-limit');
+      const marketBtn = document.getElementById('order-exec-market');
+      const isLimit = appState.orderMode === 'limit';
+      limitBtn.className = `flex-1 py-1 rounded-lg ${isLimit ? 'bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold' : 'bg-[#1c1f2e] border border-slate-700 text-slate-400 hover:text-white font-medium'} text-xs transition-all whitespace-nowrap`;
+      marketBtn.className = `flex-1 py-1 rounded-lg ${isLimit ? 'bg-[#1c1f2e] border border-slate-700 text-slate-400 hover:text-white font-medium' : 'bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold'} text-xs transition-all whitespace-nowrap`;
+      updateOrderPreview();
+    }
+
     function startMarketSimulation() {
       setInterval(() => {
+        const scenario = SIMULATION_SCENARIOS[appState.scenario];
         INITIAL_STOCKS.forEach(stk => {
-          if (Math.random() > 0.55) {
-            const up = Math.random() > 0.48;
-            const deltaTicks = up ? stk.step : -stk.step;
+          if (Math.random() < scenario.moveChance) {
+            const up = Math.random() < scenario.riseChance;
+            const tickCount = scenario.maxTicks === 1 ? 1 : Math.floor(Math.random() * scenario.maxTicks) + 1;
+            const deltaTicks = (up ? 1 : -1) * stk.step * tickCount;
             stk.price = Math.max(1000, stk.price + deltaTicks);
             if (stk.price > stk.high) stk.high = stk.price;
             if (stk.price < stk.low) stk.low = stk.price;
@@ -1295,6 +1569,8 @@
           }
         });
 
+        if (appState.pendingOrders.length > 0) saveState();
+        processPendingOrders();
         const active = getActiveStock();
         updateLiveCandle(active, Math.floor(Math.random() * 140) + 20);
         document.getElementById('chart-current-price').textContent = fmtWon(active.price);
@@ -1319,13 +1595,55 @@
     }
 
     function setupEvents() {
+      const scenarioSelect = document.getElementById('simulation-scenario');
+      scenarioSelect.value = appState.scenario;
+      renderScenarioDescription();
+      scenarioSelect.addEventListener('change', () => {
+        appState.scenario = scenarioSelect.value;
+        saveState();
+        renderScenarioDescription();
+        showToast('시나리오 변경', `${scenarioSelect.options[scenarioSelect.selectedIndex].text} 시나리오가 적용되었습니다.`);
+      });
+
+      const seedSelect = document.getElementById('starting-capital-select');
+      seedSelect.value = String(appState.seedCash);
+      seedSelect.addEventListener('change', () => {
+        const nextSeedCash = Number(seedSelect.value);
+        const hasAccountActivity = appState.cash !== appState.seedCash || Object.keys(appState.holdings).length > 0 || appState.history.length > 0 || appState.pendingOrders.length > 0;
+        if (hasAccountActivity && !confirm('초기 모의 자금을 바꾸면 현 계좌와 기록이 초기화됩니다. 계속할까요?')) {
+          seedSelect.value = String(appState.seedCash);
+          return;
+        }
+
+        appState.seedCash = nextSeedCash;
+        appState.cash = nextSeedCash;
+        appState.holdings = {};
+        appState.history = [];
+        appState.pendingOrders = [];
+        saveState();
+        renderHUD();
+        renderHoldingsTable();
+        renderHistoryTable();
+        renderPendingOrders();
+        updateOrderPreview();
+        showToast('초기 자금 변경', `${fmtWon(nextSeedCash)}원으로 모의 계좌를 초기화했습니다.`);
+      });
+
       document.getElementById('order-type-buy-btn').addEventListener('click', () => {
         appState.orderSide = 'buy';
+        if (appState.orderMode === 'limit') {
+          const stock = getActiveStock();
+          document.getElementById('input-order-price').value = stock.price - stock.step;
+        }
         syncOrderSideUI();
       });
 
       document.getElementById('order-type-sell-btn').addEventListener('click', () => {
         appState.orderSide = 'sell';
+        if (appState.orderMode === 'limit') {
+          const stock = getActiveStock();
+          document.getElementById('input-order-price').value = stock.price + stock.step;
+        }
         syncOrderSideUI();
       });
 
@@ -1334,16 +1652,12 @@
 
       limitBtn.addEventListener('click', () => {
         appState.orderMode = 'limit';
-        limitBtn.className = 'flex-1 py-1 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs transition-all whitespace-nowrap';
-        marketBtn.className = 'flex-1 py-1 rounded-lg bg-[#1c1f2e] border border-slate-700 text-slate-400 hover:text-white font-medium text-xs transition-all whitespace-nowrap';
-        updateOrderPreview();
+        syncOrderModeUI();
       });
 
       marketBtn.addEventListener('click', () => {
         appState.orderMode = 'market';
-        marketBtn.className = 'flex-1 py-1 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs transition-all whitespace-nowrap';
-        limitBtn.className = 'flex-1 py-1 rounded-lg bg-[#1c1f2e] border border-slate-700 text-slate-400 hover:text-white font-medium text-xs transition-all whitespace-nowrap';
-        updateOrderPreview();
+        syncOrderModeUI();
       });
 
       document.getElementById('btn-price-minus').addEventListener('click', () => {
@@ -1383,12 +1697,11 @@
           const price = parseFloat(document.getElementById('input-order-price').value) || stk.price;
 
           if (appState.orderSide === 'buy') {
-            const targetCash = appState.cash * ratio;
+            const targetCash = getAvailableCash() * ratio;
             const maxAffordableQty = Math.floor(targetCash / (price * 1.00015));
             document.getElementById('input-order-qty').value = Math.max(1, maxAffordableQty);
           } else {
-            const holding = appState.holdings[stk.id] || { qty: 0 };
-            document.getElementById('input-order-qty').value = Math.max(1, Math.floor(holding.qty * ratio));
+            document.getElementById('input-order-qty').value = Math.max(1, Math.floor(getAvailableShares(stk.id) * ratio));
           }
           updateOrderPreview();
         });
@@ -1445,34 +1758,34 @@
 
       const tabPortfolio = document.getElementById('tab-btn-portfolio');
       const tabHistory = document.getElementById('tab-btn-history');
+      const tabPending = document.getElementById('tab-btn-pending');
       const panelPortfolio = document.getElementById('panel-portfolio-holdings');
       const panelHistory = document.getElementById('panel-trade-history');
-
-      tabPortfolio.addEventListener('click', () => {
-        tabPortfolio.className = 'px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-colors whitespace-nowrap';
-        tabHistory.className = 'px-4 py-2 rounded-xl bg-[#1c1f2e] text-slate-400 hover:text-white font-bold text-xs flex items-center gap-2 transition-colors whitespace-nowrap';
-        panelPortfolio.classList.remove('hidden');
-        panelHistory.classList.add('hidden');
-      });
-
-      tabHistory.addEventListener('click', () => {
-        tabHistory.className = 'px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-colors whitespace-nowrap';
-        tabPortfolio.className = 'px-4 py-2 rounded-xl bg-[#1c1f2e] text-slate-400 hover:text-white font-bold text-xs flex items-center gap-2 transition-colors whitespace-nowrap';
-        panelHistory.classList.remove('hidden');
-        panelPortfolio.classList.add('hidden');
-      });
+      const tabPanels = [panelPortfolio, panelHistory, document.getElementById('panel-pending-orders')];
+      const tabButtons = [tabPortfolio, tabHistory, tabPending];
+      const activateWorkspaceTab = activeIndex => {
+        tabPanels.forEach((panel, index) => panel.classList.toggle('hidden', index !== activeIndex));
+        tabButtons.forEach((button, index) => {
+          button.className = index === activeIndex
+            ? 'px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-colors whitespace-nowrap'
+            : 'px-4 py-2 rounded-xl bg-[#1c1f2e] text-slate-400 hover:text-white font-bold text-xs flex items-center gap-2 transition-colors whitespace-nowrap';
+        });
+      };
+      tabButtons.forEach((button, index) => button.addEventListener('click', () => activateWorkspaceTab(index)));
 
       document.getElementById('btn-reset-account').addEventListener('click', () => {
-        if (confirm('계좌를 5,000만 원으로 초기화하고 보유 주식을 모두 청산하시겠습니까?')) {
-          appState.cash = DEFAULT_SEED_CASH;
+        if (confirm(`계좌를 ${fmtWon(appState.seedCash)}원으로 초기화하고 보유 주식을 모두 청산하시겠습니까?`)) {
+          appState.cash = appState.seedCash;
           appState.holdings = {};
           appState.history = [];
+          appState.pendingOrders = [];
           saveState();
           renderHUD();
           renderHoldingsTable();
           renderHistoryTable();
+          renderPendingOrders();
           updateOrderPreview();
-          showToast('계좌 초기화 완료', '모의 시드 50,000,000원으로 정상 리셋되었습니다.');
+          showToast('계좌 초기화 완료', `모의 시드 ${fmtWon(appState.seedCash)}원으로 리셋되었습니다.`);
         }
       });
 
@@ -1490,9 +1803,11 @@
       loadState();
       setupEvents();
       setActiveStock(appState.activeStockId);
+      renderScenarioDescription();
       renderHUD();
       renderHoldingsTable();
       renderHistoryTable();
+      renderPendingOrders();
       startMarketSimulation();
     }
 

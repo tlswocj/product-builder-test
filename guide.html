@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MockStox 가상 주식 시뮬레이터의 주문 방법, 지정가 체결 조건과 수수료 계산을 설명합니다.">
+  <title>이용 가이드 | MockStox</title>
+  <style>
+    :root { color-scheme: dark; --bg: #0c0e17; --line: #32343e; --text: #e1e1ef; --muted: #a7a9ba; --accent: #67e8f9; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: radial-gradient(ellipse at 15% 0%, #202442 0, var(--bg) 42rem); color: var(--text); font: 16px/1.75 Pretendard, system-ui, sans-serif; }
+    main { width: min(860px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 72px; }
+    nav, footer { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; color: var(--muted); font-size: 13px; }
+    a { color: var(--accent); }
+    h1 { margin: 56px 0 12px; font-size: clamp(30px, 6vw, 48px); line-height: 1.12; }
+    h2 { margin-top: 36px; font-size: 21px; }
+    .lead { color: #c7c4d7; font-size: 18px; }
+    .notice { margin: 24px 0; border-left: 3px solid #fbbf24; padding: 14px 18px; background: #29200f; }
+    section { border-top: 1px solid var(--line); padding-top: 4px; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; }
+    th { color: var(--muted); }
+    code { color: #c0c1ff; }
+    footer { border-top: 1px solid var(--line); padding-top: 20px; }
+  </style>
+</head>
+<body>
+<main>
+  <nav aria-label="주요 메뉴"><a href="index.html">MockStox 대시보드</a><span><a href="about.html">서비스·데이터 안내</a> · <a href="privacy.html">개인정보처리방침</a> · <a href="terms.html">이용 조건</a></span></nav>
+  <h1>주문을 연습하는 방법</h1>
+  <p class="lead">이 가이드는 현재 구현된 브라우저 시뮬레이션의 동작을 설명합니다. 실제 주식 시장의 주문 체결 방식과 다를 수 있습니다.</p>
+  <p class="notice"><strong>가상 데이터:</strong> 가격은 코드에 저장된 예시 값에서 출발해 약 3초마다 무작위로 변합니다. 실제 KRX 시세나 거래량을 제공하지 않습니다.</p>
+  <section>
+    <h2>1. 종목과 주문 종류 선택</h2>
+    <p>왼쪽 종목 목록에서 종목을 선택하고 매수 또는 매도를 고릅니다. 시장가와 지정가 중 하나를 선택합니다. 시장가 주문은 제출 시점의 현재 가상 가격으로 바로 체결됩니다.</p>
+    <table><thead><tr><th>주문 종류</th><th>동작</th></tr></thead><tbody>
+      <tr><td>시장가</td><td>현재 가상 가격으로 즉시 체결됩니다. 가격 입력은 비활성화됩니다.</td></tr>
+      <tr><td>지정가 매수</td><td>현재가보다 낮은 목표가로 접수합니다. 가상 가격이 목표가 이하가 되면 다음 가격 갱신에서 체결됩니다.</td></tr>
+      <tr><td>지정가 매도</td><td>현재가보다 높은 목표가로 접수합니다. 가상 가격이 목표가 이상이 되면 다음 가격 갱신에서 체결됩니다.</td></tr>
+    </tbody></table>
+    <p>지정가 주문은 제출하는 순간 체결되지 않습니다. 주문 접수 후에는 대기 주문 탭에서 목표가와 조건을 확인하고 취소할 수 있습니다. 대기 중에는 매수 금액 또는 매도 수량이 예약되어 다른 주문에 사용할 수 없습니다.</p>
+  </section>
+  <section>
+    <h2>시나리오와 시작 자금</h2>
+    <p>대시보드의 가격 시나리오에서 균형 변동, 상승 편향, 하락 편향, 고변동을 선택할 수 있습니다. 이 설정은 가상 가격의 변동 빈도·방향·폭에 영향을 주며 실제 시장의 시나리오나 예측이 아닙니다. 초기 모의 자금은 1,000만 원, 5,000만 원, 1억 원 중에서 선택할 수 있습니다. 계좌 활동이 있으면 변경 전에 초기화 확인을 요청합니다.</p>
+  </section>
+  <section>
+    <h2>2. 호가 단위와 체결 가격</h2>
+    <p>종목별 호가 단위는 화면에 표시됩니다. 지정가는 해당 단위의 배수로 입력해야 합니다. 대기 매수는 목표가 이하에서, 대기 매도는 목표가 이상에서 체결되므로 실제 체결 가격이 지정가보다 유리할 수 있습니다. 시장가 체결 가격은 제출 시점의 가상 현재가입니다.</p>
+    <p>호가창의 가격을 누르면 해당 가격이 지정가 입력란에 들어갑니다. 현재가와 같은 방향으로 즉시 실행 가능한 지정가는 접수하지 않습니다. 즉시 거래하려면 시장가를 선택하세요.</p>
+  </section>
+  <section>
+    <h2>3. 수수료와 손익</h2>
+    <p>시뮬레이터는 주문 금액의 0.015%를 모의 수수료로 계산하고 원 단위 반올림을 적용합니다. 매수는 수수료를 지불 금액에 더하고, 매도는 정산 금액에서 수수료를 차감합니다. 실제 증권사 수수료·세금과 다를 수 있습니다.</p>
+    <p>매수 수수료를 포함한 평균 취득 원가를 기준으로 보유 손익을 계산합니다. 매도 체결 시 매도 수수료를 차감한 정산액과 취득 원가의 차이는 실현 손익으로, 현재 평가액과 취득 원가의 차이는 미실현 손익으로 표시합니다. 총 자산과 손익에는 체결 수수료가 반영됩니다.</p>
+    <p>체결 내역마다 160자 이내의 매매 복기 메모를 입력할 수 있습니다. 메모는 이 브라우저에만 저장됩니다.</p>
+  </section>
+  <section>
+    <h2>4. 저장과 초기화</h2>
+    <p>모의 현금, 보유 종목, 체결 내역, 관심 종목, 대기 주문은 현재 브라우저의 로컬 저장소에 보관됩니다. 대기 주문이 있는 동안에는 재접속 시 잘못된 체결을 막기 위해 가상 가격 스냅샷도 저장됩니다. 다른 기기와 동기화되지 않습니다.</p>
+    <p>계좌 초기화 버튼은 모의 현금·보유 종목·체결 내역·대기 주문을 초기화합니다. 관심 종목과 이 브라우저의 저장 데이터 전체를 지우려면 <a href="privacy.html">개인정보처리방침 페이지의 저장 데이터 삭제</a>를 사용하세요.</p>
+  </section>
+  <section>
+    <h2>시뮬레이션의 한계</h2>
+    <p>가격 변동과 주문장 잔량은 무작위로 생성됩니다. 실제 거래소의 매수·매도 호가, 주문 우선순위, 부분 체결, 슬리피지, 시장 충격, 거래 정지나 거래 시간을 모델링하지 않습니다. 결과를 실제 투자 판단이나 수익 예측에 사용하지 마세요.</p>
+  </section>
+  <footer><span>MockStox · 교육 목적의 가상 시뮬레이션</span><span><a href="about.html">서비스 안내</a> · <a href="privacy.html">개인정보</a> · <a href="terms.html">이용 조건</a></span></footer>
+</main>
+</body>
+</html>
