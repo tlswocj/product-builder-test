@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<title>MockStox Pro - 실전 모의주식 트레이딩</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      }
+      body {
+        overscroll-behavior: none;
+        background-color: #0c0e17;
+        color: #e1e1ef;
+      }
+    }
+    .font-mono-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-feature-settings: 'tnum' on, 'zero' on;
+    }
+    .font-display {
+      font-family: 'Space Grotesk', 'Pretendard', sans-serif;
+    }
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(12, 14, 23, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #282933;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #464554;
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "background": "#11131c",
+          "surface-container": "#1d1f29",
+          "surface-container-low": "#191b25",
+          "surface-container-highest": "#32343e",
+          "surface-container-high": "#282933",
+          "surface-container-lowest": "#0c0e17",
+          "on-surface": "#e1e1ef",
+          "on-surface-variant": "#c7c4d7",
+          "outline": "#908fa0",
+          "outline-variant": "#464554",
+          "primary": "#c0c1ff",
+          "primary-container": "#4f46e5",
+          "bull": {
+            DEFAULT: '#f43f5e',
+            light: '#fb7185',
+            soft: 'rgba(244, 63, 94, 0.12)',
+            glow: 'rgba(244, 63, 94, 0.25)'
+          },
+          "bear": {
+            DEFAULT: '#4cd7f6',
+            light: '#7dd3fc',
+            soft: 'rgba(76, 215, 246, 0.12)',
+            glow: 'rgba(76, 215, 246, 0.25)'
+          }
+        },
+        fontFamily: {
+          "label-numeric-lg": ["JetBrains Mono"],
+          "display-lg": ["Space Grotesk"],
+          "body-md": ["Pretendard", "Geist", "sans-serif"]
+        }
+      }
+    }
+  }
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8274250125578702" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XE7M8WB7WP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XE7M8WB7WP');
+</script>
+</head>
+<body class="bg-[#0c0e17] text-[#e1e1ef] antialiased min-h-screen">
+<!-- TOP HEADER BAR: Protected with flex items & nowrap to prevent right-side truncation -->
+<header class="fixed top-0 left-0 right-0 z-50 h-16 bg-[#11131c]/95 backdrop-blur-xl border-b border-indigo-500/15 shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
+<div class="h-full w-full px-4 lg:px-5 flex items-center justify-between gap-3 overflow-x-auto min-w-0 no-scrollbar">
+<!-- Left: Brand Logo & Live Badge -->
+<div class="flex items-center gap-3.5 shrink-0">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden shadow-md shadow-indigo-500/20 bg-gradient-to-tr from-indigo-600 to-cyan-500 p-0.5 shrink-0">
+<img alt="MockStox Logo" class="w-full h-full object-contain filter brightness-110" src="https://lh3.googleusercontent.com/aida/AEtjO1UiE0SZyoD64pCqmaxwjPQoYaVwCyjGdoTQU_tTZh07W5O59HVZTFa8qLdAxutaG8fF6r1GfqCVrwXdpoN__RUvOVM0DC6JxQk7yDt6pnz8eOLKRSYmYwtaiiB5_gLUGSvW7J_mDaBNCP8-3e80FWnzAiNWAJ1PWnk5B8RsWT3oaEgZncSaVD5Saq_zx04gUn044TwD10rmHx84xRJV7nDk3V7uj2c_XTiu3W49VbzDBAq-srG-VOlqUGSQ"/>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5 leading-none">
+<span class="font-display font-extrabold text-[18px] tracking-tight text-white whitespace-nowrap">MOCK<span class="text-indigo-400">STOX</span></span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold font-mono tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 whitespace-nowrap">PRO</span>
+</div>
+<span class="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">실전형 가상 모의투자</span>
+</div>
+</div>
+<div class="hidden xl:flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-800/60 border border-slate-700/50 whitespace-nowrap shrink-0">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-xs font-semibold text-emerald-400 whitespace-nowrap">KRX 실시간 정규장</span>
+<span class="text-xs text-slate-400 font-mono-num whitespace-nowrap">09:00~15:30</span>
+</div>
+</div>
+<!-- Center: Indices Ticker (Shrinkable/Collapsible smoothly) -->
+<div class="hidden lg:flex items-center gap-4 px-3.5 py-1.5 bg-[#191b25] rounded-xl border border-slate-700/50 shrink min-w-0 overflow-hidden">
+<div class="flex items-center gap-2 whitespace-nowrap">
+<span class="text-[11px] font-bold text-slate-400 uppercase">KOSPI</span>
+<span class="text-xs font-bold text-white font-mono-num">2,684.20</span>
+<span class="text-xs font-bold text-bull-light font-mono-num flex items-center">▲ 0.85%</span>
+</div>
+<div class="w-px h-3.5 bg-slate-700/70 shrink-0"></div>
+<div class="flex items-center gap-2 whitespace-nowrap">
+<span class="text-[11px] font-bold text-slate-400 uppercase">KOSDAQ</span>
+<span class="text-xs font-bold text-white font-mono-num">872.15</span>
+<span class="text-xs font-bold text-bear-light font-mono-num flex items-center">▼ 0.32%</span>
+</div>
+<div class="w-px h-3.5 bg-slate-700/70 shrink-0 hidden 2xl:block"></div>
+<div class="hidden 2xl:flex items-center gap-2 whitespace-nowrap">
+<span class="text-[11px] font-bold text-slate-400 uppercase">USD/KRW</span>
+<span class="text-xs font-bold text-white font-mono-num">1,348.50</span>
+<span class="text-xs font-bold text-bull-light font-mono-num">▲ 2.10</span>
+</div>
+</div>
+<!-- Right: Search, Seed Amount & User Info (Never truncated, fully protected shrink-0) -->
+<div class="flex items-center gap-2.5 sm:gap-3.5 shrink-0 ml-auto">
+<div class="hidden sm:flex items-center bg-[#191b25] border border-slate-700/60 rounded-xl px-2.5 py-1.5 w-44 md:w-56 2xl:w-64 focus-within:border-indigo-400/80 transition-all shrink-0">
+<span class="material-symbols-outlined text-slate-400 text-[18px] mr-1.5 shrink-0">search</span>
+<input class="bg-transparent w-full text-slate-100 placeholder:text-slate-500 text-xs focus:outline-none whitespace-nowrap" id="header-search-bar" placeholder="종목명·코드 빠른 이동" type="text"/>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-950/70 to-slate-900 border border-indigo-500/30 whitespace-nowrap shrink-0">
+<div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shrink-0"></div>
+<span class="text-xs text-slate-400 whitespace-nowrap">모의시드</span>
+<span class="text-xs font-bold text-cyan-300 font-mono-num whitespace-nowrap" id="header-seed-cash">50,000,000원</span>
+</div>
+<div class="flex items-center gap-2 pl-1 shrink-0">
+<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-indigo-400 flex items-center justify-center ring-2 ring-indigo-500/30 shadow shrink-0">
+<span class="material-symbols-outlined text-white text-[18px]">person</span>
+</div>
+<div class="hidden md:flex flex-col leading-none shrink-0 whitespace-nowrap">
+<span class="text-xs font-bold text-white whitespace-nowrap">홍길동 마스터</span>
+<span class="text-[10px] text-slate-400 whitespace-nowrap mt-0.5">PRO 등급</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- LEFT SIDEBAR: Nav + Integrated Stock Explorer & Watchlist -->
+<aside class="fixed left-0 top-16 bottom-0 w-64 lg:w-72 bg-[#11131c] border-r border-indigo-500/15 z-40 flex flex-col justify-between p-3 overflow-hidden shadow-2xl">
+<!-- Top: Terminal Tag & Main Navigation Items -->
+<div class="flex flex-col gap-2 shrink-0">
+<div class="px-2.5 py-1.5 flex items-center justify-between rounded-lg bg-indigo-950/30 border border-indigo-500/20">
+<span class="text-[11px] font-bold text-indigo-300 uppercase tracking-wider whitespace-nowrap">터미널 환경</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-600/40 text-cyan-300 whitespace-nowrap">실시간 시뮬레이션</span>
+</div>
+<nav class="flex flex-col gap-0.5">
+<a class="flex items-center justify-between px-3 py-2 rounded-xl bg-indigo-600 text-white font-semibold text-xs shadow-md shadow-indigo-600/25 whitespace-nowrap" href="#">
+<div class="flex items-center gap-2 shrink-0">
+<span class="material-symbols-outlined text-[18px]">candlestick_chart</span>
+<span class="whitespace-nowrap">트레이딩 대시보드</span>
+</div>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-white/20 text-white">LIVE</span>
+</a>
+<a class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 text-xs font-medium transition-colors whitespace-nowrap" href="#panel-portfolio-holdings">
+<span class="material-symbols-outlined text-[18px] text-slate-400">account_balance_wallet</span>
+<span class="whitespace-nowrap">보유 자산 및 잔고</span>
+</a>
+<a class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 text-xs font-medium transition-colors whitespace-nowrap" href="#">
+<span class="material-symbols-outlined text-[18px] text-slate-400">trending_up</span>
+<span class="whitespace-nowrap">시장 급등락 탐색</span>
+</a>
+<a class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 text-xs font-medium transition-colors whitespace-nowrap" href="#">
+<span class="material-symbols-outlined text-[18px] text-slate-400">leaderboard</span>
+<span class="whitespace-nowrap">실시간 투자 랭킹</span>
+</a>
+<a class="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 text-xs font-medium transition-colors whitespace-nowrap" href="#panel-trade-history">
+<span class="material-symbols-outlined text-[18px] text-slate-400">receipt_long</span>
+<span class="whitespace-nowrap">체결 및 매매 일지</span>
+</a>
+</nav>
+</div>
+<!-- Middle: MOVED STOCK MARKET EXPLORER (Right below trade history) -->
+<div class="my-2 flex-1 flex flex-col min-h-0 bg-[#161824] rounded-xl border border-slate-700/60 overflow-hidden shadow-inner">
+<!-- Header of Explorer -->
+<div class="p-2.5 bg-[#1c1f2e] border-b border-slate-700/60 flex flex-col gap-2 shrink-0">
+<div class="flex items-center justify-between whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-indigo-400 text-[18px]">view_list</span>
+<span class="text-xs font-bold text-white whitespace-nowrap">종목 마켓 탐색</span>
+</div>
+<span class="text-[11px] font-mono-num text-slate-400 px-1.5 py-0.5 rounded bg-slate-800 whitespace-nowrap" id="stock-count-badge">6개 종목</span>
+</div>
+<!-- Search Field inside Sidebar -->
+<div class="relative">
+<span class="material-symbols-outlined text-slate-400 absolute left-2.5 top-2 text-[15px]">search</span>
+<input class="w-full bg-[#0c0e17] border border-slate-700/70 rounded-lg pl-8 pr-2.5 py-1.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-400 transition-colors whitespace-nowrap" id="stock-search-input" placeholder="종목명 또는 코드 검색" type="text"/>
+</div>
+<!-- Tab Buttons: All vs Watchlist -->
+<div class="grid grid-cols-2 gap-1 p-0.5 bg-[#0c0e17] rounded-lg border border-slate-800">
+<button class="py-1 text-center text-[11px] font-bold rounded-md bg-indigo-600 text-white shadow-sm transition-all whitespace-nowrap" id="tab-all-stocks">전체</button>
+<button class="py-1 text-center text-[11px] font-medium rounded-md text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1 whitespace-nowrap" id="tab-fav-stocks">
+<span class="material-symbols-outlined text-[13px] text-amber-400">star</span>
+<span>관심종목</span>
+</button>
+</div>
+</div>
+<!-- Stock Dynamic List container in sidebar -->
+<div class="flex-1 overflow-y-auto p-1.5 space-y-1" id="stock-list-container">
+<!-- Populated via JS -->
+</div>
+<div class="p-1.5 bg-[#12141f] border-t border-slate-800 text-center shrink-0">
+<span class="text-[10px] text-slate-400 whitespace-nowrap flex items-center justify-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        3초 단위 KRX 체결 반영
+      </span>
+</div>
+</div>
+<!-- Bottom: Feed Status footer -->
+<div class="flex flex-col gap-1.5 p-2 bg-[#161824] rounded-xl border border-slate-700/60 shrink-0">
+<div class="flex items-center justify-between text-[11px] whitespace-nowrap">
+<span class="text-slate-400">데이터 피드</span>
+<span class="font-bold text-emerald-400 font-mono-num">KRX 실시간 정상</span>
+</div>
+<div class="flex items-center justify-between text-[11px] whitespace-nowrap">
+<span class="text-slate-400">시뮬레이션 레이턴시</span>
+<span class="text-cyan-300 font-mono-num font-bold">4ms (초고속)</span>
+</div>
+</div>
+</aside>
+<!-- MAIN VIEWPORT CONTENT (Offset for Fixed Header & Sidebar) -->
+<div class="pl-64 lg:pl-72 pt-16 min-h-screen">
+<main class="p-3.5 lg:p-5 flex flex-col gap-4 max-w-[1920px] mx-auto">
+<!-- TOP ACCOUNT HUD SUMMARY (Guaranteed No Wrap & Overflow Protection for KRW / Won) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
+<!-- 1. Total Asset -->
+<div class="bg-[#191b25] hover:bg-[#1d1f29] transition-colors p-3.5 lg:p-4 rounded-xl border border-indigo-500/20 shadow-md flex items-center justify-between min-w-0">
+<div class="flex flex-col min-w-0 mr-2">
+<span class="text-[11px] font-semibold text-slate-400 truncate uppercase tracking-wider">총 평가 자산 (Net Assets)</span>
+<div class="flex items-baseline gap-1.5 mt-1 min-w-0">
+<span class="text-lg sm:text-xl lg:text-2xl font-black text-white font-mono-num whitespace-nowrap truncate" id="hud-total-asset">50,000,000</span>
+<span class="text-xs text-slate-400 font-bold whitespace-nowrap shrink-0">KRW</span>
+</div>
+</div>
+<div class="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-indigo-500/15 border border-indigo-400/20 flex items-center justify-center shrink-0 text-indigo-400">
+<span class="material-symbols-outlined text-[20px] lg:text-[22px]">account_balance</span>
+</div>
+</div>
+<!-- 2. Available Cash -->
+<div class="bg-[#191b25] hover:bg-[#1d1f29] transition-colors p-3.5 lg:p-4 rounded-xl border border-indigo-500/20 shadow-md flex items-center justify-between min-w-0">
+<div class="flex flex-col min-w-0 mr-2">
+<span class="text-[11px] font-semibold text-slate-400 truncate uppercase tracking-wider">주문 가능 예수금 (Cash)</span>
+<div class="flex items-baseline gap-1.5 mt-1 min-w-0">
+<span class="text-lg sm:text-xl lg:text-2xl font-black text-cyan-400 font-mono-num whitespace-nowrap truncate" id="hud-cash-balance">50,000,000</span>
+<span class="text-xs text-slate-400 font-bold whitespace-nowrap shrink-0">KRW</span>
+</div>
+</div>
+<div class="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-cyan-500/15 border border-cyan-400/20 flex items-center justify-center shrink-0 text-cyan-400">
+<span class="material-symbols-outlined text-[20px] lg:text-[22px]">wallet</span>
+</div>
+</div>
+<!-- 3. Total P&L -->
+<div class="bg-[#191b25] hover:bg-[#1d1f29] transition-colors p-3.5 lg:p-4 rounded-xl border border-indigo-500/20 shadow-md flex items-center justify-between min-w-0">
+<div class="flex flex-col min-w-0 mr-2">
+<span class="text-[11px] font-semibold text-slate-400 truncate uppercase tracking-wider">총 평가 손익 (Total P&amp;L)</span>
+<div class="flex items-baseline gap-1.5 mt-1 min-w-0">
+<span class="text-lg sm:text-xl lg:text-2xl font-black text-slate-300 font-mono-num whitespace-nowrap truncate" id="hud-total-pnl">0원</span>
+<span class="text-[11px] font-bold text-slate-400 font-mono-num whitespace-nowrap px-1.5 py-0.5 rounded bg-slate-800 shrink-0" id="hud-total-rate">0.00%</span>
+</div>
+</div>
+<div class="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-rose-500/15 border border-rose-400/20 flex items-center justify-center shrink-0 text-rose-400">
+<span class="material-symbols-outlined text-[20px] lg:text-[22px]">show_chart</span>
+</div>
+</div>
+<!-- 4. Holdings Count -->
+<div class="bg-[#191b25] hover:bg-[#1d1f29] transition-colors p-3.5 lg:p-4 rounded-xl border border-indigo-500/20 shadow-md flex items-center justify-between min-w-0">
+<div class="flex flex-col min-w-0 mr-2">
+<span class="text-[11px] font-semibold text-slate-400 truncate uppercase tracking-wider">보유 포지션 (Holdings)</span>
+<div class="flex items-baseline gap-1 mt-1 min-w-0">
+<span class="text-lg sm:text-xl lg:text-2xl font-black text-indigo-300 font-mono-num whitespace-nowrap" id="hud-holdings-count">0</span>
+<span class="text-xs text-slate-400 font-bold whitespace-nowrap shrink-0">개 종목</span>
+</div>
+</div>
+<div class="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-purple-500/15 border border-purple-400/20 flex items-center justify-center shrink-0 text-purple-400">
+<span class="material-symbols-outlined text-[20px] lg:text-[22px]">pie_chart</span>
+</div>
+</div>
+<!-- 5. Reset Workspace -->
+<div class="bg-gradient-to-br from-[#1c1f2e] to-[#141622] p-3.5 lg:p-4 rounded-xl border border-indigo-500/30 shadow-md flex items-center justify-between min-w-0">
+<div class="flex flex-col min-w-0 mr-2">
+<span class="text-[11px] font-bold text-indigo-300 whitespace-nowrap">초기화 워크스페이스</span>
+<span class="text-xs text-slate-400 mt-0.5 whitespace-nowrap truncate">자산 원상 복구</span>
+</div>
+<button class="px-3 py-1.5 lg:px-3.5 lg:py-2 rounded-lg bg-indigo-600/30 hover:bg-indigo-600 border border-indigo-500/40 text-indigo-200 hover:text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow whitespace-nowrap shrink-0" id="btn-reset-account">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+<span class="whitespace-nowrap">5,000만 리셋</span>
+</button>
+</div>
+</section>
+<!-- PRO TRADING DESK: EXPANDED 2-COLUMN LAYOUT (Chart 8 cols, Orderbook 4 cols) -->
+<section class="grid grid-cols-1 xl:grid-cols-12 gap-4 items-stretch">
+<!-- EXPANDED MAIN CHART TERMINAL (Takes 8 of 12 cols, wide aspect) -->
+<div class="xl:col-span-8 bg-[#161824] rounded-2xl border border-slate-700/60 shadow-xl flex flex-col h-[740px] overflow-hidden">
+<!-- Top Stock Info Strip -->
+<div class="p-4 bg-gradient-to-r from-[#1c1f2e] to-[#161824] border-b border-slate-700/60 flex items-center justify-between flex-wrap gap-3">
+<div class="flex items-center gap-3">
+<button class="w-9 h-9 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-amber-400/50 flex items-center justify-center transition-colors shrink-0" id="btn-toggle-favorite-current">
+<span class="material-symbols-outlined text-slate-400 text-[20px]" id="current-fav-icon">star_border</span>
+</button>
+<div class="flex flex-col">
+<div class="flex items-center gap-2 whitespace-nowrap">
+<h2 class="text-xl lg:text-2xl font-extrabold text-white tracking-tight whitespace-nowrap" id="chart-stock-name">삼성전자</h2>
+<span class="text-xs px-2 py-0.5 rounded-md bg-slate-800 text-slate-400 font-mono-num font-semibold whitespace-nowrap" id="chart-stock-code">005930</span>
+<span class="text-xs px-2 py-0.5 rounded-md bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 font-medium whitespace-nowrap">KOSPI 대형주</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1 whitespace-nowrap">
+<span class="text-2xl lg:text-3xl font-black text-bull-light font-mono-num tracking-tight whitespace-nowrap" id="chart-current-price">78,400</span>
+<span class="text-xs font-bold text-slate-400 whitespace-nowrap">KRW</span>
+<span class="text-xs font-bold text-bull-light font-mono-num whitespace-nowrap bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20" id="chart-price-delta">▲ 1,400 (+1.82%)</span>
+</div>
+</div>
+</div>
+<!-- Stock High / Low / Volume Stats -->
+<div class="flex items-center gap-4 sm:gap-6 whitespace-nowrap shrink-0">
+<div class="flex flex-col text-right whitespace-nowrap">
+<span class="text-[11px] text-slate-400 font-medium whitespace-nowrap">당일 고가 / 저가</span>
+<div class="flex items-center gap-1.5 text-xs font-mono-num font-bold mt-0.5 whitespace-nowrap">
+<span class="text-bull-light whitespace-nowrap" id="chart-high-price">79,200</span>
+<span class="text-slate-600">/</span>
+<span class="text-bear-light whitespace-nowrap" id="chart-low-price">77,900</span>
+</div>
+</div>
+<div class="w-px h-8 bg-slate-700/60"></div>
+<div class="flex flex-col text-right whitespace-nowrap">
+<span class="text-[11px] text-slate-400 font-medium whitespace-nowrap">누적 거래량</span>
+<span class="text-xs font-bold text-slate-200 font-mono-num mt-0.5 whitespace-nowrap" id="chart-volume">14,289,120 주</span>
+</div>
+</div>
+</div>
+<!-- Chart Controls Bar -->
+<div class="px-4 py-2 bg-[#11131c] border-b border-slate-800 flex items-center justify-between whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<button class="chart-period-btn px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow transition-all whitespace-nowrap" data-period="1m">1분</button>
+<button class="chart-period-btn px-3 py-1 rounded-lg text-xs font-semibold bg-[#1d1f29] text-slate-300 hover:text-white hover:bg-slate-700 transition-all whitespace-nowrap" data-period="5m">5분</button>
+<button class="chart-period-btn px-3 py-1 rounded-lg text-xs font-semibold bg-[#1d1f29] text-slate-300 hover:text-white hover:bg-slate-700 transition-all whitespace-nowrap" data-period="10m">10분</button>
+<button class="chart-period-btn px-3 py-1 rounded-lg text-xs font-semibold bg-[#1d1f29] text-slate-300 hover:text-white hover:bg-slate-700 transition-all whitespace-nowrap" data-period="30m">30분</button>
+<button class="chart-period-btn px-3 py-1 rounded-lg text-xs font-semibold bg-[#1d1f29] text-slate-300 hover:text-white hover:bg-slate-700 transition-all whitespace-nowrap" data-period="1h">1시간</button>
+<button class="chart-period-btn px-3 py-1 rounded-lg text-xs font-semibold bg-[#1d1f29] text-slate-300 hover:text-white hover:bg-slate-700 transition-all whitespace-nowrap" data-period="1D">일봉</button>
+</div>
+<div class="hidden sm:flex items-center gap-3 text-[11px] text-slate-400 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span>실시간 주가</span>
+<span class="inline-flex items-center gap-1.5"><span class="w-2 h-1 rounded bg-amber-400"></span>MA 5</span>
+<span class="inline-flex items-center gap-1.5"><span class="w-2 h-1 rounded bg-sky-500"></span>MA 20</span>
+<span class="inline-flex items-center gap-1.5"><span class="w-2 h-1 rounded bg-purple-500"></span>MA 60</span>
+</div>
+</div>
+<!-- EXTENDED CHART GRAPHIC CANVAS (Expanded Full Width) -->
+<div class="relative flex-1 w-full bg-gradient-to-b from-[#131622] via-[#10121c] to-[#0c0e17] select-none flex flex-col justify-between p-4 overflow-hidden min-h-[460px]" id="chart-canvas-wrapper">
+<!-- Realtime Price Hover Tooltip Badge -->
+<div class="absolute top-4 left-4 z-20 px-3 py-1.5 rounded-xl bg-[#1d1f29]/90 backdrop-blur-md border border-indigo-500/30 flex items-center gap-2 shadow-lg" id="chart-hover-indicator">
+<span class="w-2 h-2 rounded-full bg-bull animate-ping"></span>
+<span class="text-xs text-slate-300 font-medium whitespace-nowrap">현재 실시간 체결가:</span>
+<span class="text-xs font-bold font-mono-num text-bull-light whitespace-nowrap" id="chart-tooltip-val">78,400 KRW</span>
+</div>
+<!-- Interactive SVG Visual Canvas (High resolution wide 1000px viewbox) -->
+<div class="relative w-full flex-1 my-1">
+<svg class="w-full h-full" id="trading-chart-svg" role="img" aria-label="실시간 캔들 주가 차트" preserveAspectRatio="none" viewBox="0 0 1000 620">
+<g id="chart-grid"></g>
+<g id="chart-volume-bars"></g>
+<g id="chart-moving-averages"></g>
+<g id="chart-candles"></g>
+<g id="chart-price-axis"></g>
+<g id="chart-time-axis"></g>
+<g id="chart-live-overlay"></g>
+</svg>
+</div>
+</div>
+</div>
+<!-- RIGHT: COMPACT ORDERBOOK & PRO ORDER ENTRY (4 cols) -->
+<div class="xl:col-span-4 flex flex-col gap-3.5 h-[740px]">
+<!-- REALTIME 10-LEVEL ORDER BOOK (Top Half) -->
+<div class="bg-[#161824] rounded-2xl border border-slate-700/60 shadow-xl p-3 flex flex-col justify-between flex-1 overflow-hidden">
+<div class="flex items-center justify-between pb-1.5 border-b border-slate-800 whitespace-nowrap">
+<span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap">
+<span class="material-symbols-outlined text-indigo-400 text-[16px]">stacked_bar_chart</span>
+              실시간 10단계 호가창
+            </span>
+<span class="text-[11px] text-cyan-300 font-medium whitespace-nowrap bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40">호가 클릭 시 자동입력</span>
+</div>
+<!-- Asks (매도호가) -->
+<div class="flex flex-col gap-0.5 my-1 overflow-hidden" id="orderbook-asks"></div>
+<!-- Mid-Market Spread Info Pill -->
+<div class="py-1 px-3 my-0.5 rounded-lg bg-[#1c1f2e] border border-slate-700/60 flex items-center justify-between whitespace-nowrap">
+<span class="text-[11px] font-bold text-slate-400 whitespace-nowrap">현재 기준가</span>
+<span class="text-xs font-black text-white font-mono-num whitespace-nowrap" id="orderbook-mid-price">78,400</span>
+<span class="text-[11px] font-bold text-bull-light font-mono-num whitespace-nowrap">+1.82%</span>
+</div>
+<!-- Bids (매수호가) -->
+<div class="flex flex-col gap-0.5 my-1 overflow-hidden" id="orderbook-bids"></div>
+</div>
+<!-- PRO ORDER ENTRY FORM (Bottom Half) -->
+<div class="bg-[#161824] rounded-2xl border border-slate-700/60 shadow-xl p-3.5 flex flex-col justify-between flex-1">
+<div class="flex flex-col gap-2.5">
+<!-- Buy / Sell Mode Tabs -->
+<div class="grid grid-cols-2 p-1 bg-[#0c0e17] rounded-xl border border-slate-800 gap-1">
+<button class="py-2 rounded-lg font-bold text-xs bg-bull text-white shadow-md shadow-rose-900/30 transition-all whitespace-nowrap" id="order-type-buy-btn">매수 (BUY)</button>
+<button class="py-2 rounded-lg font-bold text-xs text-slate-400 hover:text-white transition-all whitespace-nowrap" id="order-type-sell-btn">매도 (SELL)</button>
+</div>
+<!-- Limit / Market Order Type Selector -->
+<div class="flex items-center gap-1.5">
+<button class="flex-1 py-1 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs transition-all whitespace-nowrap" id="order-exec-limit">지정가</button>
+<button class="flex-1 py-1 rounded-lg bg-[#1c1f2e] border border-slate-700 text-slate-400 hover:text-white font-medium text-xs transition-all whitespace-nowrap" id="order-exec-market">시장가</button>
+</div>
+<!-- Available Balance / Holdings Pill -->
+<div class="bg-[#11131c] border border-slate-800 rounded-xl px-3 py-2 flex items-center justify-between whitespace-nowrap">
+<span class="text-xs text-slate-400 whitespace-nowrap shrink-0" id="order-context-label">주문가능 예수금</span>
+<span class="text-xs font-bold text-cyan-300 font-mono-num whitespace-nowrap" id="order-context-value">50,000,000원</span>
+</div>
+<!-- Order Price Stepper -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-xs whitespace-nowrap">
+<span class="text-slate-400 whitespace-nowrap">주문 가격 (KRW)</span>
+<span class="text-[11px] text-slate-500 font-mono-num whitespace-nowrap" id="price-step-hint">호가단위 100원</span>
+</div>
+<div class="flex items-center bg-[#0c0e17] border border-slate-700/80 rounded-xl overflow-hidden focus-within:border-indigo-400">
+<button class="w-9 h-8 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 font-black text-sm transition-colors shrink-0" id="btn-price-minus">-</button>
+<input class="w-full bg-transparent text-center font-mono-num font-bold text-white text-xs focus:outline-none py-1" id="input-order-price" step="100" type="number" value="78400"/>
+<button class="w-9 h-8 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 font-black text-sm transition-colors shrink-0" id="btn-price-plus">+</button>
+</div>
+</div>
+<!-- Order Quantity Stepper -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-xs whitespace-nowrap">
+<span class="text-slate-400 whitespace-nowrap">주문 수량 (주)</span>
+<span class="text-[11px] text-indigo-300 font-mono-num font-semibold whitespace-nowrap" id="holding-qty-hint">보유: 0주</span>
+</div>
+<div class="flex items-center bg-[#0c0e17] border border-slate-700/80 rounded-xl overflow-hidden focus-within:border-indigo-400">
+<button class="w-9 h-8 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 font-black text-sm transition-colors shrink-0" id="btn-qty-minus">-</button>
+<input class="w-full bg-transparent text-center font-mono-num font-bold text-white text-xs focus:outline-none py-1" id="input-order-qty" min="1" type="number" value="10"/>
+<button class="w-9 h-8 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 font-black text-sm transition-colors shrink-0" id="btn-qty-plus">+</button>
+</div>
+</div>
+<!-- Quick Ratio Buttons -->
+<div class="grid grid-cols-4 gap-1">
+<button class="btn-quick-ratio py-1 rounded bg-[#1c1f2e] hover:bg-slate-700 text-slate-300 font-bold font-mono-num text-[11px] transition-colors whitespace-nowrap" data-ratio="0.10">10%</button>
+<button class="btn-quick-ratio py-1 rounded bg-[#1c1f2e] hover:bg-slate-700 text-slate-300 font-bold font-mono-num text-[11px] transition-colors whitespace-nowrap" data-ratio="0.25">25%</button>
+<button class="btn-quick-ratio py-1 rounded bg-[#1c1f2e] hover:bg-slate-700 text-slate-300 font-bold font-mono-num text-[11px] transition-colors whitespace-nowrap" data-ratio="0.50">50%</button>
+<button class="btn-quick-ratio py-1 rounded bg-indigo-600/30 hover:bg-indigo-600 border border-indigo-500/40 text-cyan-300 font-black font-mono-num text-[11px] transition-colors whitespace-nowrap" data-ratio="1.00">최대</button>
+</div>
+<!-- Total Breakdown Card -->
+<div class="bg-[#0c0e17] rounded-xl p-2.5 border border-slate-800 flex flex-col gap-1.5 text-xs whitespace-nowrap">
+<div class="flex items-center justify-between whitespace-nowrap">
+<span class="text-slate-400 whitespace-nowrap shrink-0">주문 금액 합계</span>
+<span class="font-mono-num text-slate-200 font-bold whitespace-nowrap" id="preview-raw-total">784,000원</span>
+</div>
+<div class="flex items-center justify-between whitespace-nowrap">
+<span class="text-slate-400 whitespace-nowrap shrink-0">모의 거래 수수료 (0.015%)</span>
+<span class="font-mono-num text-slate-400 whitespace-nowrap" id="preview-fee-total">118원</span>
+</div>
+<div class="w-full h-px bg-slate-800 my-0.5"></div>
+<div class="flex items-center justify-between font-bold whitespace-nowrap">
+<span class="text-slate-200 whitespace-nowrap shrink-0">최종 결제 예상액</span>
+<span class="font-mono-num text-bull-light text-sm whitespace-nowrap" id="preview-final-total">784,118원</span>
+</div>
+</div>
+</div>
+<!-- Submit Button & Slippage note -->
+<div class="flex flex-col gap-1.5 pt-2">
+<button class="w-full py-3 rounded-xl bg-bull hover:bg-rose-600 text-white font-bold text-xs shadow-lg shadow-rose-950/50 transition-all flex items-center justify-center gap-1.5 whitespace-nowrap" id="btn-submit-order">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span class="whitespace-nowrap" id="order-submit-text">삼성전자 10주 매수 주문</span>
+</button>
+<div class="flex items-center justify-between text-[11px] text-slate-500 px-1 whitespace-nowrap">
+<span class="whitespace-nowrap">가상 체결 슬리피지: 0%</span>
+<span class="text-emerald-400 font-semibold whitespace-nowrap">● 즉시 체결 활성</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- BOTTOM HOLDINGS & TRADE HISTORY WORKSPACE -->
+<section class="bg-[#161824] rounded-2xl border border-slate-700/60 shadow-xl p-4 flex flex-col gap-4">
+<!-- Tab Bar Header -->
+<div class="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-3">
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-colors whitespace-nowrap" id="tab-btn-portfolio">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+<span class="whitespace-nowrap">보유 주식 잔고 (포트폴리오)</span>
+<span class="px-2 py-0.5 rounded-full bg-white/20 text-white text-[11px] font-mono-num" id="badge-portfolio-count">0</span>
+</button>
+<button class="px-4 py-2 rounded-xl bg-[#1c1f2e] text-slate-400 hover:text-white font-bold text-xs flex items-center gap-2 transition-colors whitespace-nowrap" id="tab-btn-history">
+<span class="material-symbols-outlined text-[18px]">history</span>
+<span class="whitespace-nowrap">실시간 체결 내역</span>
+<span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[11px] font-mono-num" id="badge-history-count">0</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-[#1c1f2e] hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-colors whitespace-nowrap" id="btn-export-records">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span class="whitespace-nowrap">거래 기록 JSON 다운로드</span>
+</button>
+</div>
+</div>
+<!-- TAB 1: HOLDINGS TABLE -->
+<div class="overflow-x-auto min-h-[180px]" id="panel-portfolio-holdings">
+<table class="w-full text-left text-xs whitespace-nowrap">
+<thead>
+<tr class="bg-[#11131c] text-slate-400 font-bold border-b border-slate-800">
+<th class="py-3 px-4 rounded-l-lg whitespace-nowrap">종목명 / 코드</th>
+<th class="py-3 px-4 text-right whitespace-nowrap">보유 수량</th>
+<th class="py-3 px-4 text-right whitespace-nowrap">평균 매입가</th>
+<th class="py-3 px-4 text-right whitespace-nowrap">현재 시세</th>
+<th class="py-3 px-4 text-right whitespace-nowrap">총 평가 금액</th>
+<th class="py-3 px-4 text-right whitespace-nowrap">평가 손익</th>
+<th class="py-3 px-4 text-right whitespace-nowrap">수익률</th>
+<th class="py-3 px-4 text-center rounded-r-lg whitespace-nowrap">빠른 실행</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-800/80" id="portfolio-table-body">
+<!-- Dynamically populated via JS -->
+</tbody>
+</table>
+<div class="hidden flex-col items-center justify-center py-12 text-slate-500" id="portfolio-empty-state">
+<span class="material-symbols-outlined text-[42px] text-slate-600 mb-2">savings</span>
+<span class="text-xs font-medium whitespace-nowrap">현재 보유 중인 포지션이 없습니다. 좌측 종목 탐색에서 종목을 선택 후 매수해보세요.</span>
+</div>
+</div>
+<!-- TAB 2: TRADE HISTORY TABLE -->
+<div class="hidden overflow-x-auto min-h-[180px]" id="panel-trade-history">
+<table class="w-full text-left text-xs whitespace-nowrap">
+<thead>
+<tr class="bg-[#11131c] text-slate-400 font-bold border-b border-slate-800">
+<th class="py-3 px-4 rounded-l-lg whitespace-nowrap">체결 시각</th>
+<th class="py-3 px-4 whitespace-nowrap">구분</th>
+<th class="py-3 px-4 whitespace-nowrap">종목명</th>
+<th class="py-3 px-4 text-right whitespace-nowrap">체결 가격</th>
+<th class="py-3 px-4 text-right whitespace-nowrap">체결 수량</th>
+<th class="py-3 px-4 text-right whitespace-nowrap">정산 금액</th>
+<th class="py-3 px-4 text-center rounded-r-lg whitespace-nowrap">체결 상태</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-800/80" id="history-table-body">
+<!-- Dynamically populated via JS -->
+</tbody>
+</table>
+<div class="hidden flex-col items-center justify-center py-12 text-slate-500" id="history-empty-state">
+<span class="material-symbols-outlined text-[42px] text-slate-600 mb-2">receipt_long</span>
+<span class="text-xs font-medium whitespace-nowrap">체결된 거래 내역이 아직 없습니다.</span>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- FLOATING TOAST NOTIFICATION -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl bg-[#1c1f2e] border border-indigo-500/40 text-white whitespace-nowrap" id="trading-toast">
+<span class="material-symbols-outlined text-cyan-400 text-[24px]" id="toast-icon">check_circle</span>
+<div class="flex flex-col whitespace-nowrap">
+<span class="text-xs font-bold text-white whitespace-nowrap" id="toast-title">주문 처리 완료</span>
+<span class="text-[11px] text-slate-300 whitespace-nowrap" id="toast-message">정상적으로 주문이 체결되었습니다.</span>
+</div>
+</div>
+<!-- CORE TRADING JS LOGIC (Completely preserved & adapted) -->
+<script>
+  (function() {
+    const DEFAULT_SEED_CASH = 50000000;
+    const STORAGE_KEY = 'mockstox_state_v3';
+
+    // 6 Core Korean Stocks
+    const INITIAL_STOCKS = [
+      { id: '005930', name: '삼성전자', market: 'KOSPI', price: 78400, prevClose: 77000, volume: 14289120, high: 79200, low: 77900, step: 100 },
+      { id: '000660', name: 'SK하이닉스', market: 'KOSPI', price: 186200, prevClose: 180000, volume: 4892100, high: 188500, low: 181000, step: 500 },
+      { id: '005380', name: '현대차', market: 'KOSPI', price: 245000, prevClose: 244000, volume: 1084200, high: 247000, low: 242500, step: 500 },
+      { id: '035420', name: 'NAVER', market: 'KOSPI', price: 192500, prevClose: 195000, volume: 832040, high: 196200, low: 191000, step: 500 },
+      { id: '247540', name: '에코프로비엠', market: 'KOSDAQ', price: 212000, prevClose: 207000, volume: 1642100, high: 216500, low: 206000, step: 500 },
+      { id: '068270', name: '셀트리온', market: 'KOSPI', price: 184300, prevClose: 185500, volume: 721900, high: 186400, low: 183200, step: 500 }
+    ];
+    const CHART_PERIOD_MS = { '1m': 60000, '5m': 300000, '10m': 600000, '30m': 1800000, '1h': 3600000, '1D': 86400000 };
+
+    let appState = {
+      cash: DEFAULT_SEED_CASH,
+      holdings: {},
+      history: [],
+      watchlist: ['005930', '000660'],
+      activeStockId: '005930',
+      activeFilter: 'all',
+      orderSide: 'buy',
+      orderMode: 'limit',
+      chartPeriod: '1m'
+    };
+
+    function loadState() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          appState = { ...appState, ...parsed };
+        } catch (e) {
+          console.error('State load error', e);
+        }
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        cash: appState.cash,
+        holdings: appState.holdings,
+        history: appState.history,
+        watchlist: appState.watchlist
+      }));
+    }
+
+    const fmtWon = (num) => Math.round(num).toLocaleString('ko-KR');
+    const fmtSignWon = (num) => {
+      const sign = num > 0 ? '+' : '';
+      return `${sign}${fmtWon(num)}원`;
+    };
+
+    function getActiveStock() {
+      return INITIAL_STOCKS.find(s => s.id === appState.activeStockId) || INITIAL_STOCKS[0];
+    }
+
+    function showToast(title, msg, isSuccess = true) {
+      const toast = document.getElementById('trading-toast');
+      const icon = document.getElementById('toast-icon');
+      const tTitle = document.getElementById('toast-title');
+      const tMsg = document.getElementById('toast-message');
+
+      icon.textContent = isSuccess ? 'check_circle' : 'error';
+      icon.className = isSuccess ? 'material-symbols-outlined text-cyan-400 text-[24px]' : 'material-symbols-outlined text-bull-light text-[24px]';
+      tTitle.textContent = title;
+      tMsg.textContent = msg;
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3500);
+    }
+
+    function calcMetrics() {
+      let stockValuation = 0;
+      let totalPurchaseCost = 0;
+
+      Object.entries(appState.holdings).forEach(([id, item]) => {
+        if (item.qty > 0) {
+          const stock = INITIAL_STOCKS.find(s => s.id === id);
+          const currentPrice = stock ? stock.price : item.avgPrice;
+          stockValuation += currentPrice * item.qty;
+          totalPurchaseCost += item.avgPrice * item.qty;
+        }
+      });
+
+      const totalAssets = appState.cash + stockValuation;
+      const totalPnl = totalAssets - DEFAULT_SEED_CASH;
+      const totalRate = ((totalPnl / DEFAULT_SEED_CASH) * 100).toFixed(2);
+      const holdingsCount = Object.values(appState.holdings).filter(h => h.qty > 0).length;
+
+      return { totalAssets, stockValuation, totalPnl, totalRate, holdingsCount };
+    }
+
+    function renderHUD() {
+      const { totalAssets, totalPnl, totalRate, holdingsCount } = calcMetrics();
+      const elAsset = document.getElementById('hud-total-asset');
+      const elCash = document.getElementById('hud-cash-balance');
+      const elPnl = document.getElementById('hud-total-pnl');
+      const elRate = document.getElementById('hud-total-rate');
+      const elHoldCount = document.getElementById('hud-holdings-count');
+      const headerSeed = document.getElementById('header-seed-cash');
+
+      elAsset.textContent = fmtWon(totalAssets);
+      elCash.textContent = fmtWon(appState.cash);
+      elPnl.textContent = fmtSignWon(totalPnl);
+      elRate.textContent = `${totalPnl > 0 ? '+' : ''}${totalRate}%`;
+      elHoldCount.textContent = holdingsCount;
+      if (headerSeed) {
+        headerSeed.textContent = `${fmtWon(appState.cash)}원`;
+      }
+
+      if (totalPnl > 0) {
+        elPnl.className = 'text-lg sm:text-xl lg:text-2xl font-black text-bull-light font-mono-num whitespace-nowrap truncate';
+        elRate.className = 'text-[11px] font-bold text-bull-light font-mono-num whitespace-nowrap px-1.5 py-0.5 rounded bg-rose-500/20 shrink-0';
+      } else if (totalPnl < 0) {
+        elPnl.className = 'text-lg sm:text-xl lg:text-2xl font-black text-bear-light font-mono-num whitespace-nowrap truncate';
+        elRate.className = 'text-[11px] font-bold text-bear-light font-mono-num whitespace-nowrap px-1.5 py-0.5 rounded bg-cyan-500/20 shrink-0';
+      } else {
+        elPnl.className = 'text-lg sm:text-xl lg:text-2xl font-black text-slate-300 font-mono-num whitespace-nowrap truncate';
+        elRate.className = 'text-[11px] font-bold text-slate-400 font-mono-num whitespace-nowrap px-1.5 py-0.5 rounded bg-slate-800 shrink-0';
+      }
+    }
+
+    function renderStockList() {
+      const container = document.getElementById('stock-list-container');
+      const searchInput = document.getElementById('stock-search-input');
+      const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      container.innerHTML = '';
+
+      let list = INITIAL_STOCKS.filter(stk => {
+        const matchesFilter = appState.activeFilter === 'all' || appState.watchlist.includes(stk.id);
+        const matchesSearch = !searchVal || stk.name.toLowerCase().includes(searchVal) || stk.id.includes(searchVal);
+        return matchesFilter && matchesSearch;
+      });
+
+      const badge = document.getElementById('stock-count-badge');
+      if (badge) badge.textContent = `${list.length}개 종목`;
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="py-8 text-center text-slate-500 text-xs font-medium whitespace-nowrap">일치하는 종목이 없습니다.</div>`;
+        return;
+      }
+
+      list.forEach(stk => {
+        const delta = stk.price - stk.prevClose;
+        const deltaPct = ((delta / stk.prevClose) * 100).toFixed(2);
+        const isUp = delta >= 0;
+        const isSelected = stk.id === appState.activeStockId;
+        const isFav = appState.watchlist.includes(stk.id);
+
+        const card = document.createElement('div');
+        card.className = `p-2 sm:p-2.5 rounded-xl cursor-pointer transition-all flex items-center justify-between border whitespace-nowrap ${
+          isSelected 
+            ? 'bg-[#1e2338] border-indigo-500 shadow-md shadow-indigo-900/20' 
+            : 'bg-[#11131f] border-slate-800/80 hover:bg-[#1a1d2e] hover:border-slate-700'
+        }`;
+
+        card.innerHTML = `
+          <div class="flex items-center gap-1.5 min-w-0 shrink">
+            <button class="btn-toggle-fav p-1 rounded-lg hover:bg-slate-700/50 transition-colors shrink-0" data-id="${stk.id}">
+              <span class="material-symbols-outlined text-[16px] ${isFav ? 'text-amber-400' : 'text-slate-500'}">
+                ${isFav ? 'star' : 'star_border'}
+              </span>
+            </button>
+            <div class="flex flex-col min-w-0">
+              <span class="text-xs font-bold text-white whitespace-nowrap truncate">${stk.name}</span>
+              <span class="text-[10px] text-slate-400 font-mono-num whitespace-nowrap">${stk.id}</span>
+            </div>
+          </div>
+          <div class="flex flex-col text-right whitespace-nowrap shrink-0 pl-1">
+            <span class="text-xs font-bold text-white font-mono-num whitespace-nowrap">${fmtWon(stk.price)}</span>
+            <span class="text-[10px] font-bold font-mono-num whitespace-nowrap ${isUp ? 'text-bull-light' : 'text-bear-light'}">
+              ${isUp ? '▲' : '▼'} ${Math.abs(deltaPct)}%
+            </span>
+          </div>
+        `;
+
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.btn-toggle-fav')) return;
+          setActiveStock(stk.id);
+        });
+
+        const favBtn = card.querySelector('.btn-toggle-fav');
+        favBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleFavorite(stk.id);
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    function toggleFavorite(id) {
+      if (appState.watchlist.includes(id)) {
+        appState.watchlist = appState.watchlist.filter(x => x !== id);
+      } else {
+        appState.watchlist.push(id);
+      }
+      saveState();
+      renderStockList();
+      updateCurrentFavIcon();
+    }
+
+    function updateCurrentFavIcon() {
+      const isFav = appState.watchlist.includes(appState.activeStockId);
+      const icon = document.getElementById('current-fav-icon');
+      if (icon) {
+        icon.textContent = isFav ? 'star' : 'star_border';
+        icon.className = `material-symbols-outlined text-[20px] ${isFav ? 'text-amber-400' : 'text-slate-400'}`;
+      }
+    }
+
+    function setActiveStock(id) {
+      appState.activeStockId = id;
+      const stk = getActiveStock();
+
+      document.getElementById('chart-stock-name').textContent = stk.name;
+      document.getElementById('chart-stock-code').textContent = stk.id;
+      document.getElementById('chart-current-price').textContent = fmtWon(stk.price);
+
+      const delta = stk.price - stk.prevClose;
+      const deltaPct = ((delta / stk.prevClose) * 100).toFixed(2);
+      const isUp = delta >= 0;
+      const deltaEl = document.getElementById('chart-price-delta');
+      deltaEl.textContent = `${isUp ? '▲' : '▼'} ${fmtWon(Math.abs(delta))} (${isUp ? '+' : ''}${deltaPct}%)`;
+      deltaEl.className = `text-xs font-bold font-mono-num whitespace-nowrap px-2 py-0.5 rounded border ${
+        isUp ? 'text-bull-light bg-rose-500/10 border-rose-500/20' : 'text-bear-light bg-cyan-500/10 border-cyan-500/20'
+      }`;
+
+      document.getElementById('chart-high-price').textContent = fmtWon(stk.high);
+      document.getElementById('chart-low-price').textContent = fmtWon(stk.low);
+      document.getElementById('chart-volume').textContent = `${stk.volume.toLocaleString('ko-KR')} 주`;
+
+      const priceInput = document.getElementById('input-order-price');
+      if (appState.orderMode === 'limit') {
+        priceInput.value = stk.price;
+        priceInput.step = stk.step;
+      }
+      document.getElementById('price-step-hint').textContent = `호가단위 ${stk.step}원`;
+
+      updateCurrentFavIcon();
+      renderOrderBook();
+      renderChartSVG();
+      updateOrderPreview();
+      renderStockList();
+    }
+
+    function renderOrderBook() {
+      const stk = getActiveStock();
+      const step = stk.step;
+      const basePrice = stk.price;
+
+      const asksContainer = document.getElementById('orderbook-asks');
+      const bidsContainer = document.getElementById('orderbook-bids');
+      const midEl = document.getElementById('orderbook-mid-price');
+
+      midEl.textContent = fmtWon(basePrice);
+      asksContainer.innerHTML = '';
+      bidsContainer.innerHTML = '';
+
+      const askLevels = [5, 4, 3, 2, 1].map(lvl => ({
+        price: basePrice + (lvl * step),
+        qty: Math.floor(Math.random() * 2600) + 320
+      }));
+
+      const bidLevels = [1, 2, 3, 4, 5].map(lvl => ({
+        price: basePrice - (lvl * step),
+        qty: Math.floor(Math.random() * 2900) + 410
+      }));
+
+      const maxQty = Math.max(...askLevels.map(a => a.qty), ...bidLevels.map(b => b.qty));
+
+      askLevels.forEach(item => {
+        const pct = Math.min(100, Math.round((item.qty / maxQty) * 100));
+        const row = document.createElement('div');
+        row.className = 'relative flex items-center justify-between py-1 px-2.5 rounded cursor-pointer hover:bg-slate-700/40 transition-colors overflow-hidden whitespace-nowrap';
+        row.innerHTML = `
+          <div class="absolute right-0 top-0 bottom-0 bg-bear/15 rounded-r" style="width: ${pct}%"></div>
+          <span class="text-xs text-bear-light font-mono-num font-bold relative z-10 whitespace-nowrap">${fmtWon(item.price)}</span>
+          <span class="text-[11px] text-slate-400 font-mono-num relative z-10 whitespace-nowrap">${item.qty.toLocaleString()}</span>
+        `;
+        row.addEventListener('click', () => {
+          document.getElementById('input-order-price').value = item.price;
+          updateOrderPreview();
+        });
+        asksContainer.appendChild(row);
+      });
+
+      bidLevels.forEach(item => {
+        const pct = Math.min(100, Math.round((item.qty / maxQty) * 100));
+        const row = document.createElement('div');
+        row.className = 'relative flex items-center justify-between py-1 px-2.5 rounded cursor-pointer hover:bg-slate-700/40 transition-colors overflow-hidden whitespace-nowrap';
+        row.innerHTML = `
+          <div class="absolute right-0 top-0 bottom-0 bg-bull/15 rounded-r" style="width: ${pct}%"></div>
+          <span class="text-xs text-bull-light font-mono-num font-bold relative z-10 whitespace-nowrap">${fmtWon(item.price)}</span>
+          <span class="text-[11px] text-slate-400 font-mono-num relative z-10 whitespace-nowrap">${item.qty.toLocaleString()}</span>
+        `;
+        row.addEventListener('click', () => {
+          document.getElementById('input-order-price').value = item.price;
+          updateOrderPreview();
+        });
+        bidsContainer.appendChild(row);
+      });
+    }
+
+    function getChartCandles(stock) {
+      const period = CHART_PERIOD_MS[appState.chartPeriod] ? appState.chartPeriod : '1m';
+      const interval = CHART_PERIOD_MS[period];
+      stock.chartCandles ||= {};
+      if (!stock.chartCandles[period]) {
+        const count = 72;
+        const closes = new Array(count);
+        closes[count - 1] = stock.price;
+        for (let index = count - 2; index >= 0; index--) {
+          closes[index] = Math.max(stock.step, closes[index + 1] + (Math.random() - 0.5) * stock.step * 8);
+        }
+        const nowBucket = Math.floor(Date.now() / interval) * interval;
+        stock.chartCandles[period] = closes.map((close, index) => {
+          const open = index === 0 ? close + (Math.random() - 0.5) * stock.step * 4 : closes[index - 1];
+          const range = stock.step * (1 + Math.random() * 3);
+          return {
+            time: nowBucket - (count - index - 1) * interval,
+            open,
+            high: Math.max(open, close) + range,
+            low: Math.max(stock.step, Math.min(open, close) - range),
+            close,
+            volume: Math.floor(8000 + Math.random() * 48000)
+          };
+        });
+      }
+      return stock.chartCandles[period];
+    }
+
+    function updateLiveCandle(stock, tradedVolume) {
+      const candles = getChartCandles(stock);
+      const interval = CHART_PERIOD_MS[appState.chartPeriod];
+      const time = Math.floor(Date.now() / interval) * interval;
+      let candle = candles[candles.length - 1];
+      if (candle.time !== time) {
+        candle = { time, open: candle.close, high: stock.price, low: stock.price, close: stock.price, volume: 0 };
+        candles.push(candle);
+        if (candles.length > 72) candles.shift();
+      }
+      candle.close = stock.price;
+      candle.high = Math.max(candle.high, stock.price);
+      candle.low = Math.min(candle.low, stock.price);
+      candle.volume += tradedVolume;
+    }
+
+    function renderChartSVG() {
+      const stk = getActiveStock();
+      const candles = getChartCandles(stk).slice(-72);
+      const width = 1000;
+      const left = 14;
+      const right = 920;
+      const top = 22;
+      const bottom = 430;
+      const volumeTop = 500;
+      const volumeBottom = 582;
+      const prices = candles.flatMap(candle => [candle.high, candle.low]);
+      const rawMin = Math.min(...prices);
+      const rawMax = Math.max(...prices);
+      const padding = Math.max((rawMax - rawMin) * 0.08, stk.step * 3);
+      const minPrice = rawMin - padding;
+      const maxPrice = rawMax + padding;
+      const priceY = price => top + ((maxPrice - price) / (maxPrice - minPrice)) * (bottom - top);
+      const slotWidth = (right - left) / candles.length;
+      const candleWidth = Math.max(4, Math.min(11, slotWidth * 0.58));
+      const maxVolume = Math.max(...candles.map(candle => candle.volume), 1);
+      const grid = [];
+      const priceLabels = [];
+
+      for (let index = 0; index <= 5; index++) {
+        const y = top + ((bottom - top) / 5) * index;
+        const price = maxPrice - ((maxPrice - minPrice) / 5) * index;
+        grid.push(`<line x1="${left}" y1="${y}" x2="${right}" y2="${y}" stroke="#253149" stroke-dasharray="3 5"/>`);
+        priceLabels.push(`<text x="${right + 12}" y="${y + 4}" fill="#9eabc3" font-size="13" font-family="JetBrains Mono,monospace">${fmtWon(price)}</text>`);
+      }
+      for (let index = 0; index < 6; index++) {
+        const x = left + ((right - left) / 5) * index;
+        grid.push(`<line x1="${x}" y1="${top}" x2="${x}" y2="${volumeBottom}" stroke="#1d2a41" stroke-dasharray="2 6"/>`);
+      }
+      grid.push(`<line x1="${left}" y1="465" x2="${right}" y2="465" stroke="#33415a"/>`);
+
+      const candleMarkup = candles.map((candle, index) => {
+        const x = left + slotWidth * index + slotWidth / 2;
+        const rising = candle.close >= candle.open;
+        const color = rising ? '#f43f5e' : '#168bff';
+        const openY = priceY(candle.open);
+        const closeY = priceY(candle.close);
+        const bodyY = Math.min(openY, closeY);
+        const bodyHeight = Math.max(2, Math.abs(closeY - openY));
+        const volumeHeight = Math.max(2, (candle.volume / maxVolume) * (volumeBottom - volumeTop));
+        return `<line x1="${x}" y1="${priceY(candle.high)}" x2="${x}" y2="${priceY(candle.low)}" stroke="${color}" stroke-width="1.5"/><rect x="${x - candleWidth / 2}" y="${bodyY}" width="${candleWidth}" height="${bodyHeight}" fill="${color}"/><rect x="${x - candleWidth / 2}" y="${volumeBottom - volumeHeight}" width="${candleWidth}" height="${volumeHeight}" fill="${color}" opacity=".82"/>`;
+      }).join('');
+
+      const movingAverages = [
+        { period: 5, color: '#f59e0b' },
+        { period: 20, color: '#168bff' },
+        { period: 60, color: '#a855f7' }
+      ].map(({ period, color }) => {
+        const points = [];
+        for (let index = period - 1; index < candles.length; index++) {
+          const average = candles.slice(index - period + 1, index + 1).reduce((sum, candle) => sum + candle.close, 0) / period;
+          const x = left + slotWidth * index + slotWidth / 2;
+          points.push(`${points.length ? 'L' : 'M'} ${x} ${priceY(average)}`);
+        }
+        return points.length ? `<path d="${points.join(' ')}" fill="none" stroke="${color}" stroke-width="1.7" stroke-linejoin="round"/>` : '';
+      }).join('');
+
+      const timeLabels = [0, 17, 35, 53, 71].map(index => {
+        const candle = candles[index];
+        const date = new Date(candle.time);
+        const label = appState.chartPeriod === '1D'
+          ? `${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
+          : date.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
+        const x = left + slotWidth * index + slotWidth / 2;
+        return `<text x="${x}" y="610" fill="#9eabc3" font-size="12" text-anchor="middle" font-family="JetBrains Mono,monospace">${label}</text>`;
+      }).join('');
+      const liveCandle = candles[candles.length - 1];
+      const liveY = priceY(stk.price);
+      const liveColor = liveCandle.close >= liveCandle.open ? '#f43f5e' : '#168bff';
+
+      document.getElementById('chart-grid').innerHTML = grid.join('');
+      document.getElementById('chart-volume-bars').innerHTML = `<text x="${left + 4}" y="488" fill="#9eabc3" font-size="12">거래량 ${fmtWon(liveCandle.volume)}</text>`;
+      document.getElementById('chart-candles').innerHTML = candleMarkup;
+      document.getElementById('chart-moving-averages').innerHTML = movingAverages;
+      document.getElementById('chart-price-axis').innerHTML = `${priceLabels.join('')}<line x1="${left}" y1="${liveY}" x2="${right}" y2="${liveY}" stroke="${liveColor}" stroke-dasharray="5 4" opacity=".9"/><rect x="${right + 3}" y="${liveY - 12}" width="72" height="24" rx="3" fill="${liveColor}"/><text x="${right + 39}" y="${liveY + 5}" fill="#fff" text-anchor="middle" font-size="13" font-weight="700" font-family="JetBrains Mono,monospace">${fmtWon(stk.price)}</text>`;
+      document.getElementById('chart-time-axis').innerHTML = timeLabels;
+
+      const tooltipVal = document.getElementById('chart-tooltip-val');
+      const isBull = stk.price >= stk.prevClose;
+      tooltipVal.textContent = `${fmtWon(stk.price)} KRW`;
+      tooltipVal.className = `text-xs font-bold font-mono-num whitespace-nowrap ${isBull ? 'text-bull-light' : 'text-bear-light'}`;
+    }
+
+    function updateOrderPreview() {
+      const stk = getActiveStock();
+      const isBuy = appState.orderSide === 'buy';
+      const isMarket = appState.orderMode === 'market';
+
+      const priceInput = document.getElementById('input-order-price');
+      const qtyInput = document.getElementById('input-order-qty');
+
+      if (isMarket) {
+        priceInput.value = stk.price;
+        priceInput.disabled = true;
+      } else {
+        priceInput.disabled = false;
+      }
+
+      let price = parseFloat(priceInput.value) || 0;
+      let qty = parseInt(qtyInput.value, 10) || 0;
+      if (qty < 1) qty = 1;
+
+      const rawTotal = price * qty;
+      const fee = Math.round(rawTotal * 0.00015);
+      const finalTotal = isBuy ? (rawTotal + fee) : Math.max(0, rawTotal - fee);
+
+      document.getElementById('preview-raw-total').textContent = `${fmtWon(rawTotal)}원`;
+      document.getElementById('preview-fee-total').textContent = `${fmtWon(fee)}원`;
+      document.getElementById('preview-final-total').textContent = `${fmtWon(finalTotal)}원`;
+
+      const btn = document.getElementById('btn-submit-order');
+      const submitText = document.getElementById('order-submit-text');
+      const holdingInfo = appState.holdings[stk.id] || { qty: 0 };
+
+      document.getElementById('holding-qty-hint').textContent = `보유: ${holdingInfo.qty}주`;
+
+      if (isBuy) {
+        document.getElementById('order-context-label').textContent = '주문가능 예수금';
+        document.getElementById('order-context-value').textContent = `${fmtWon(appState.cash)}원`;
+        submitText.textContent = `${stk.name} ${qty}주 매수 주문`;
+        btn.className = 'w-full py-3 rounded-xl bg-bull hover:bg-rose-600 text-white font-bold text-xs shadow-lg shadow-rose-950/50 transition-all flex items-center justify-center gap-1.5 whitespace-nowrap';
+      } else {
+        document.getElementById('order-context-label').textContent = '매도 가능 수량';
+        document.getElementById('order-context-value').textContent = `${holdingInfo.qty}주 (${fmtWon(holdingInfo.qty * stk.price)}원)`;
+        submitText.textContent = `${stk.name} ${qty}주 매도 주문`;
+        btn.className = 'w-full py-3 rounded-xl bg-bear hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-lg shadow-sky-950/50 transition-all flex items-center justify-center gap-1.5 whitespace-nowrap';
+      }
+    }
+
+    function handleOrderSubmit() {
+      const stk = getActiveStock();
+      const isBuy = appState.orderSide === 'buy';
+      const isMarket = appState.orderMode === 'market';
+
+      const price = isMarket ? stk.price : (parseFloat(document.getElementById('input-order-price').value) || 0);
+      const qty = parseInt(document.getElementById('input-order-qty').value, 10) || 0;
+
+      if (price <= 0 || qty <= 0) {
+        showToast('주문 실패', '유효한 가격과 수량을 입력해주세요.', false);
+        return;
+      }
+
+      const rawAmount = price * qty;
+      const fee = Math.round(rawAmount * 0.00015);
+      const totalCost = rawAmount + fee;
+
+      if (isBuy) {
+        if (totalCost > appState.cash) {
+          showToast('주문 불가', '예수금이 부족합니다. 수량을 조정해주세요.', false);
+          return;
+        }
+
+        appState.cash -= totalCost;
+        const currentHold = appState.holdings[stk.id] || { qty: 0, avgPrice: 0 };
+        const newTotalQty = currentHold.qty + qty;
+        const newAvgPrice = Math.round(((currentHold.avgPrice * currentHold.qty) + rawAmount) / newTotalQty);
+
+        appState.holdings[stk.id] = { qty: newTotalQty, avgPrice: newAvgPrice };
+
+        const now = new Date();
+        const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+        appState.history.unshift({
+          id: 'TX' + Date.now().toString().slice(-6),
+          time: timeStr,
+          side: 'BUY',
+          stockId: stk.id,
+          stockName: stk.name,
+          price: price,
+          qty: qty,
+          total: totalCost
+        });
+
+        saveState();
+        renderHUD();
+        renderHoldingsTable();
+        renderHistoryTable();
+        updateOrderPreview();
+        showToast('매수 체결 완료', `${stk.name} ${qty}주가 ${fmtWon(price)}원에 즉시 체결되었습니다.`);
+      } else {
+        const currentHold = appState.holdings[stk.id] || { qty: 0, avgPrice: 0 };
+        if (currentHold.qty < qty) {
+          showToast('주문 불가', `보유 수량(${currentHold.qty}주)을 초과하여 매도할 수 없습니다.`, false);
+          return;
+        }
+
+        const netProceeds = rawAmount - fee;
+        appState.cash += netProceeds;
+        currentHold.qty -= qty;
+
+        if (currentHold.qty <= 0) {
+          delete appState.holdings[stk.id];
+        } else {
+          appState.holdings[stk.id] = currentHold;
+        }
+
+        const now = new Date();
+        const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+        appState.history.unshift({
+          id: 'TX' + Date.now().toString().slice(-6),
+          time: timeStr,
+          side: 'SELL',
+          stockId: stk.id,
+          stockName: stk.name,
+          price: price,
+          qty: qty,
+          total: netProceeds
+        });
+
+        saveState();
+        renderHUD();
+        renderHoldingsTable();
+        renderHistoryTable();
+        updateOrderPreview();
+        showToast('매도 체결 완료', `${stk.name} ${qty}주 매도 정산 ${fmtWon(netProceeds)}원이 입금되었습니다.`);
+      }
+    }
+
+    function renderHoldingsTable() {
+      const tbody = document.getElementById('portfolio-table-body');
+      const emptyState = document.getElementById('portfolio-empty-state');
+      const badgeCount = document.getElementById('badge-portfolio-count');
+      tbody.innerHTML = '';
+
+      const heldKeys = Object.keys(appState.holdings).filter(k => appState.holdings[k].qty > 0);
+      badgeCount.textContent = heldKeys.length;
+
+      if (heldKeys.length === 0) {
+        emptyState.classList.remove('hidden');
+        emptyState.classList.add('flex');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      emptyState.classList.remove('flex');
+
+      heldKeys.forEach(id => {
+        const item = appState.holdings[id];
+        const stock = INITIAL_STOCKS.find(s => s.id === id) || { name: '알 수 없음', price: item.avgPrice };
+        const evalAmount = stock.price * item.qty;
+        const costAmount = item.avgPrice * item.qty;
+        const pnl = evalAmount - costAmount;
+        const pnlRate = ((pnl / costAmount) * 100).toFixed(2);
+        const isUp = pnl >= 0;
+
+        const tr = document.createElement('tr');
+        tr.className = 'border-b border-slate-800/80 hover:bg-[#1a1d2e] transition-colors whitespace-nowrap';
+        tr.innerHTML = `
+          <td class="py-3.5 px-4 whitespace-nowrap">
+            <div class="flex items-center gap-2 whitespace-nowrap">
+              <span class="font-bold text-white cursor-pointer hover:text-indigo-400 transition-colors row-stock-pick whitespace-nowrap">${stock.name}</span>
+              <span class="text-[10px] text-slate-400 font-mono-num bg-slate-800 px-1.5 py-0.5 rounded whitespace-nowrap">${id}</span>
+            </div>
+          </td>
+          <td class="py-3.5 px-4 text-right text-white font-mono-num font-semibold whitespace-nowrap">${item.qty}주</td>
+          <td class="py-3.5 px-4 text-right text-slate-400 font-mono-num whitespace-nowrap">${fmtWon(item.avgPrice)}원</td>
+          <td class="py-3.5 px-4 text-right text-white font-mono-num font-bold whitespace-nowrap">${fmtWon(stock.price)}원</td>
+          <td class="py-3.5 px-4 text-right text-white font-mono-num whitespace-nowrap">${fmtWon(evalAmount)}원</td>
+          <td class="py-3.5 px-4 text-right ${isUp ? 'text-bull-light' : 'text-bear-light'} font-mono-num font-bold whitespace-nowrap">${fmtSignWon(pnl)}</td>
+          <td class="py-3.5 px-4 text-right ${isUp ? 'text-bull-light' : 'text-bear-light'} font-mono-num font-bold whitespace-nowrap">${isUp ? '+' : ''}${pnlRate}%</td>
+          <td class="py-3.5 px-4 text-center whitespace-nowrap">
+            <button class="btn-instant-sell px-3 py-1 rounded-lg bg-bear/15 hover:bg-bear hover:text-slate-950 text-bear-light text-xs font-bold transition-all border border-bear/30 whitespace-nowrap" data-id="${id}" data-qty="${item.qty}">
+              전량 즉시매도
+            </button>
+          </td>
+        `;
+
+        tr.querySelector('.row-stock-pick').addEventListener('click', () => {
+          setActiveStock(id);
+        });
+
+        tr.querySelector('.btn-instant-sell').addEventListener('click', (e) => {
+          const targetId = e.currentTarget.getAttribute('data-id');
+          const targetQty = parseInt(e.currentTarget.getAttribute('data-qty'), 10);
+          setActiveStock(targetId);
+          appState.orderSide = 'sell';
+          syncOrderSideUI();
+          document.getElementById('input-order-qty').value = targetQty;
+          updateOrderPreview();
+          handleOrderSubmit();
+        });
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderHistoryTable() {
+      const tbody = document.getElementById('history-table-body');
+      const emptyState = document.getElementById('history-empty-state');
+      const badgeCount = document.getElementById('badge-history-count');
+      tbody.innerHTML = '';
+
+      badgeCount.textContent = appState.history.length;
+
+      if (appState.history.length === 0) {
+        emptyState.classList.remove('hidden');
+        emptyState.classList.add('flex');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      emptyState.classList.remove('flex');
+
+      appState.history.slice(0, 15).forEach(tx => {
+        const isBuy = tx.side === 'BUY';
+        const tr = document.createElement('tr');
+        tr.className = 'border-b border-slate-800/80 hover:bg-[#1a1d2e] transition-colors whitespace-nowrap';
+        tr.innerHTML = `
+          <td class="py-3 px-4 text-slate-400 font-mono-num text-[11px] whitespace-nowrap">${tx.time}</td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold whitespace-nowrap ${isBuy ? 'bg-rose-500/20 text-bull-light border border-rose-500/30' : 'bg-cyan-500/20 text-bear-light border border-cyan-500/30'}">
+              ${isBuy ? '매수 체결' : '매도 체결'}
+            </span>
+          </td>
+          <td class="py-3 px-4 font-bold text-white whitespace-nowrap">${tx.stockName} <span class="text-slate-400 text-[10px] font-mono-num">(${tx.stockId})</span></td>
+          <td class="py-3 px-4 text-right text-white font-mono-num whitespace-nowrap">${fmtWon(tx.price)}원</td>
+          <td class="py-3 px-4 text-right text-white font-mono-num font-semibold whitespace-nowrap">${tx.qty}주</td>
+          <td class="py-3 px-4 text-right font-bold text-white font-mono-num whitespace-nowrap">${fmtWon(tx.total)}원</td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">
+            <span class="text-[11px] text-emerald-400 font-medium inline-flex items-center gap-1 whitespace-nowrap">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 체결완료
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function syncOrderSideUI() {
+      const isBuy = appState.orderSide === 'buy';
+      const buyBtn = document.getElementById('order-type-buy-btn');
+      const sellBtn = document.getElementById('order-type-sell-btn');
+
+      if (isBuy) {
+        buyBtn.className = 'py-2 rounded-lg font-bold text-xs bg-bull text-white shadow-md shadow-rose-900/30 transition-all whitespace-nowrap';
+        sellBtn.className = 'py-2 rounded-lg font-bold text-xs text-slate-400 hover:text-white transition-all whitespace-nowrap';
+      } else {
+        sellBtn.className = 'py-2 rounded-lg font-bold text-xs bg-bear text-slate-950 shadow-md shadow-sky-900/30 transition-all whitespace-nowrap';
+        buyBtn.className = 'py-2 rounded-lg font-bold text-xs text-slate-400 hover:text-white transition-all whitespace-nowrap';
+      }
+      updateOrderPreview();
+    }
+
+    function startMarketSimulation() {
+      setInterval(() => {
+        INITIAL_STOCKS.forEach(stk => {
+          if (Math.random() > 0.55) {
+            const up = Math.random() > 0.48;
+            const deltaTicks = up ? stk.step : -stk.step;
+            stk.price = Math.max(1000, stk.price + deltaTicks);
+            if (stk.price > stk.high) stk.high = stk.price;
+            if (stk.price < stk.low) stk.low = stk.price;
+            stk.volume += Math.floor(Math.random() * 150);
+          }
+        });
+
+        const active = getActiveStock();
+        updateLiveCandle(active, Math.floor(Math.random() * 140) + 20);
+        document.getElementById('chart-current-price').textContent = fmtWon(active.price);
+        document.getElementById('chart-high-price').textContent = fmtWon(active.high);
+        document.getElementById('chart-low-price').textContent = fmtWon(active.low);
+        document.getElementById('chart-volume').textContent = `${active.volume.toLocaleString('ko-KR')} 주`;
+        const delta = active.price - active.prevClose;
+        const deltaPct = ((delta / active.prevClose) * 100).toFixed(2);
+        const isUp = delta >= 0;
+        const deltaEl = document.getElementById('chart-price-delta');
+        deltaEl.textContent = `${isUp ? '▲' : '▼'} ${fmtWon(Math.abs(delta))} (${isUp ? '+' : ''}${deltaPct}%)`;
+        deltaEl.className = `text-xs font-bold font-mono-num whitespace-nowrap px-2 py-0.5 rounded border ${
+          isUp ? 'text-bull-light bg-rose-500/10 border-rose-500/20' : 'text-bear-light bg-cyan-500/10 border-cyan-500/20'
+        }`;
+
+        renderChartSVG();
+        renderHUD();
+        renderOrderBook();
+        renderHoldingsTable();
+        renderStockList();
+      }, 3000);
+    }
+
+    function setupEvents() {
+      document.getElementById('order-type-buy-btn').addEventListener('click', () => {
+        appState.orderSide = 'buy';
+        syncOrderSideUI();
+      });
+
+      document.getElementById('order-type-sell-btn').addEventListener('click', () => {
+        appState.orderSide = 'sell';
+        syncOrderSideUI();
+      });
+
+      const limitBtn = document.getElementById('order-exec-limit');
+      const marketBtn = document.getElementById('order-exec-market');
+
+      limitBtn.addEventListener('click', () => {
+        appState.orderMode = 'limit';
+        limitBtn.className = 'flex-1 py-1 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs transition-all whitespace-nowrap';
+        marketBtn.className = 'flex-1 py-1 rounded-lg bg-[#1c1f2e] border border-slate-700 text-slate-400 hover:text-white font-medium text-xs transition-all whitespace-nowrap';
+        updateOrderPreview();
+      });
+
+      marketBtn.addEventListener('click', () => {
+        appState.orderMode = 'market';
+        marketBtn.className = 'flex-1 py-1 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs transition-all whitespace-nowrap';
+        limitBtn.className = 'flex-1 py-1 rounded-lg bg-[#1c1f2e] border border-slate-700 text-slate-400 hover:text-white font-medium text-xs transition-all whitespace-nowrap';
+        updateOrderPreview();
+      });
+
+      document.getElementById('btn-price-minus').addEventListener('click', () => {
+        const stk = getActiveStock();
+        const input = document.getElementById('input-order-price');
+        input.value = Math.max(stk.step, (parseInt(input.value, 10) || stk.price) - stk.step);
+        updateOrderPreview();
+      });
+
+      document.getElementById('btn-price-plus').addEventListener('click', () => {
+        const stk = getActiveStock();
+        const input = document.getElementById('input-order-price');
+        input.value = (parseInt(input.value, 10) || stk.price) + stk.step;
+        updateOrderPreview();
+      });
+
+      document.getElementById('input-order-price').addEventListener('input', updateOrderPreview);
+
+      document.getElementById('btn-qty-minus').addEventListener('click', () => {
+        const input = document.getElementById('input-order-qty');
+        input.value = Math.max(1, (parseInt(input.value, 10) || 1) - 1);
+        updateOrderPreview();
+      });
+
+      document.getElementById('btn-qty-plus').addEventListener('click', () => {
+        const input = document.getElementById('input-order-qty');
+        input.value = (parseInt(input.value, 10) || 0) + 1;
+        updateOrderPreview();
+      });
+
+      document.getElementById('input-order-qty').addEventListener('input', updateOrderPreview);
+
+      document.querySelectorAll('.btn-quick-ratio').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const ratio = parseFloat(e.currentTarget.getAttribute('data-ratio'));
+          const stk = getActiveStock();
+          const price = parseFloat(document.getElementById('input-order-price').value) || stk.price;
+
+          if (appState.orderSide === 'buy') {
+            const targetCash = appState.cash * ratio;
+            const maxAffordableQty = Math.floor(targetCash / (price * 1.00015));
+            document.getElementById('input-order-qty').value = Math.max(1, maxAffordableQty);
+          } else {
+            const holding = appState.holdings[stk.id] || { qty: 0 };
+            document.getElementById('input-order-qty').value = Math.max(1, Math.floor(holding.qty * ratio));
+          }
+          updateOrderPreview();
+        });
+      });
+
+      document.getElementById('btn-submit-order').addEventListener('click', handleOrderSubmit);
+
+      const stockSearch = document.getElementById('stock-search-input');
+      if (stockSearch) {
+        stockSearch.addEventListener('input', renderStockList);
+      }
+
+      const headSearch = document.getElementById('header-search-bar');
+      if (headSearch) {
+        headSearch.addEventListener('input', (e) => {
+          if (stockSearch) stockSearch.value = e.target.value;
+          renderStockList();
+        });
+      }
+
+      const tabAll = document.getElementById('tab-all-stocks');
+      const tabFav = document.getElementById('tab-fav-stocks');
+
+      if (tabAll && tabFav) {
+        tabAll.addEventListener('click', () => {
+          appState.activeFilter = 'all';
+          tabAll.className = 'py-1 text-center text-[11px] font-bold rounded-md bg-indigo-600 text-white shadow-sm transition-all whitespace-nowrap';
+          tabFav.className = 'py-1 text-center text-[11px] font-medium rounded-md text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1 whitespace-nowrap';
+          renderStockList();
+        });
+
+        tabFav.addEventListener('click', () => {
+          appState.activeFilter = 'fav';
+          tabFav.className = 'py-1 text-center text-[11px] font-bold rounded-md bg-indigo-600 text-white shadow-sm transition-all flex items-center justify-center gap-1 whitespace-nowrap';
+          tabAll.className = 'py-1 text-center text-[11px] font-medium rounded-md text-slate-400 hover:text-white transition-all whitespace-nowrap';
+          renderStockList();
+        });
+      }
+
+      document.getElementById('btn-toggle-favorite-current').addEventListener('click', () => {
+        toggleFavorite(appState.activeStockId);
+      });
+
+      document.querySelectorAll('.chart-period-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.chart-period-btn').forEach(b => {
+            b.className = 'chart-period-btn px-3 py-1 rounded-lg text-xs font-semibold bg-[#1d1f29] text-slate-300 hover:text-white hover:bg-slate-700 transition-all whitespace-nowrap';
+          });
+          e.currentTarget.className = 'chart-period-btn px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow transition-all whitespace-nowrap';
+          appState.chartPeriod = e.currentTarget.getAttribute('data-period');
+          renderChartSVG();
+        });
+      });
+
+      const tabPortfolio = document.getElementById('tab-btn-portfolio');
+      const tabHistory = document.getElementById('tab-btn-history');
+      const panelPortfolio = document.getElementById('panel-portfolio-holdings');
+      const panelHistory = document.getElementById('panel-trade-history');
+
+      tabPortfolio.addEventListener('click', () => {
+        tabPortfolio.className = 'px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-colors whitespace-nowrap';
+        tabHistory.className = 'px-4 py-2 rounded-xl bg-[#1c1f2e] text-slate-400 hover:text-white font-bold text-xs flex items-center gap-2 transition-colors whitespace-nowrap';
+        panelPortfolio.classList.remove('hidden');
+        panelHistory.classList.add('hidden');
+      });
+
+      tabHistory.addEventListener('click', () => {
+        tabHistory.className = 'px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-colors whitespace-nowrap';
+        tabPortfolio.className = 'px-4 py-2 rounded-xl bg-[#1c1f2e] text-slate-400 hover:text-white font-bold text-xs flex items-center gap-2 transition-colors whitespace-nowrap';
+        panelHistory.classList.remove('hidden');
+        panelPortfolio.classList.add('hidden');
+      });
+
+      document.getElementById('btn-reset-account').addEventListener('click', () => {
+        if (confirm('계좌를 5,000만 원으로 초기화하고 보유 주식을 모두 청산하시겠습니까?')) {
+          appState.cash = DEFAULT_SEED_CASH;
+          appState.holdings = {};
+          appState.history = [];
+          saveState();
+          renderHUD();
+          renderHoldingsTable();
+          renderHistoryTable();
+          updateOrderPreview();
+          showToast('계좌 초기화 완료', '모의 시드 50,000,000원으로 정상 리셋되었습니다.');
+        }
+      });
+
+      document.getElementById('btn-export-records').addEventListener('click', () => {
+        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(appState, null, 2));
+        const dlAnchor = document.createElement('a');
+        dlAnchor.setAttribute('href', dataStr);
+        dlAnchor.setAttribute('download', `mockstox_records_${Date.now()}.json`);
+        dlAnchor.click();
+        showToast('내보내기 완료', '거래 내역 데이터 파일이 다운로드되었습니다.');
+      });
+    }
+
+    function init() {
+      loadState();
+      setupEvents();
+      setActiveStock(appState.activeStockId);
+      renderHUD();
+      renderHoldingsTable();
+      renderHistoryTable();
+      startMarketSimulation();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+</body></html>
